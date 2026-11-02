@@ -173,17 +173,16 @@ section{position:relative}
 }
 
 /* ---------- merkenband (zweeft op de achtergrond) ---------- */
-.merken{padding:clamp(28px,4vh,44px) 0 clamp(40px,6vh,72px);border-top:1px solid var(--line);
-  border-bottom:1px solid var(--line)}
+.merken{padding:clamp(28px,4vh,44px) 0 clamp(40px,6vh,72px);background:#FBF7F1}
 .merken__kop{max-width:var(--max);margin:0 auto clamp(20px,3vh,32px);padding:0 var(--gut);
-  font-size:13px;font-weight:600;color:var(--muted)}
+  font-size:13px;font-weight:600;color:#6F6659}
 /* Klemmen zit hier, niet meer op .merken zelf, en met 32px speling aan
    weerskanten (via negatieve margin + evenveel padding terug). Zonder die
    speling knipte een vergroot logo (hover, scale 1.28) hard af zodra het
    dicht bij de rand van het scherm stond -- gemeten tot 24px overschrijding
    bij een logo van de volle 165px breedte. De 32px is onzichtbaar: deze
-   sectie heeft geen eigen achtergrond, dus de extra ruimte toont gewoon de
-   paginakleur door. */
+   sectie is een effen balk over de volle breedte, dus de extra ruimte toont
+   dezelfde kleur. */
 /* overflow-x + overflow-y:visible werkt niet zoals bedoeld: zodra een van
    de twee assen iets anders dan visible krijgt, dwingt de browser de
    "vrije" as naar auto, en auto knipt zodra er iets buiten komt (met een
@@ -207,12 +206,9 @@ section{position:relative}
    Culinair Plaza") -- die moeten hun eigen breedte kunnen houden, anders
    loopt de tekst met white-space:nowrap over de buren heen. */
 .merken__spoor li{white-space:nowrap;font-size:clamp(.95rem,1.5vw,1.15rem);font-weight:600;
-  letter-spacing:-.01em;color:#8F9796}
+  letter-spacing:-.01em;color:#6F6659}
 .merken__spoor li:has(img){width:156px;flex:none;display:flex;align-items:center;justify-content:center;text-align:center}
-/* Klantlogo's zijn donker op transparant (sommige volledig dekkend): op zwart
-   zouden ze verdwijnen, dus elk logo staat op een gedempte lichte tegel. */
-.merken__spoor img{box-sizing:content-box;max-height:34px;max-width:120px;width:auto;height:auto;object-fit:contain;
-  opacity:.8;background:var(--ink);padding:9px 14px;border-radius:8px}
+.merken__spoor img{box-sizing:content-box;max-height:34px;max-width:120px;width:auto;height:auto;object-fit:contain;}
 /* De band loopt met GSAP zodra dat geladen is; dan zet main.js de class
    merken--js en verdwijnen deze keyframes. Laadt GSAP niet, dan blijft de
    band gewoon lopen op eigen kracht. Alleen met GSAP kan hij versnellen
@@ -370,7 +366,7 @@ section[id]{scroll-margin-top:82px}
     transform-origin:center}
   .merken__spoor li:hover img{transform:scale(1.28);opacity:1}
   .merken__spoor li{transition:color .32s var(--ease)}
-  .merken__spoor li:hover{color:var(--ink)}
+  .merken__spoor li:hover{color:#14120F}
   /* Geldt voor elk logo, zonder uitzondering: het vergrote logo moet altijd
      bovenop alles komen te liggen -- de buren in de rij, de rand van de
      sectie, alles. Zonder een eigen stapelvolgorde (z-index) schilderen
