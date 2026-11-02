@@ -20,9 +20,12 @@
   --ink:#DCE1E0;
   --muted:#A3ABAA;
   --muted-op-zand:#B4BCBB;
-  --accent:#B9944A;
+  --accent:#FA8A00;
   --goud:#B9944A;
   --knop:#FA8A00;
+  --oranje:#FA8A00;
+  --paars:#7D04E6;
+  --paars-licht:#B266FF;
   --accent-ink:#000000;
   --fout:#FFB066;
   --gut:clamp(20px,5vw,72px);
@@ -72,8 +75,10 @@ ul,ol{margin:0;padding:0;list-style:none}
   font-size:15px;font-weight:600;letter-spacing:-.01em;text-decoration:none;
   cursor:pointer;transition:transform .35s var(--ease),background-color .25s,border-color .25s,color .25s;
 }
-.btn--primary{background-color:var(--knop);color:#000000}
-.btn--primary:hover{background-color:#FFA033}
+.btn--primary{background-color:var(--knop);color:#000000;
+  background-image:linear-gradient(100deg,#FA8A00 0%,#FFB347 50%,#FA8A00 100%);background-size:220% 100%;background-position:0 0;
+  transition:transform .35s var(--ease),background-position .6s var(--ease),box-shadow .35s var(--ease),border-color .25s,color .25s}
+.btn--primary:hover{background-position:100% 0}
 .btn--ghost{background-color:transparent;color:var(--ink);border-color:var(--line-2)}
 .btn--ghost:hover{border-color:var(--ink)}
 .btn--sm{padding:11px 20px;font-size:14px}
@@ -81,7 +86,7 @@ ul,ol{margin:0;padding:0;list-style:none}
 
 /* ---------- navigatie ---------- */
 .nav{position:fixed;inset:0 0 auto 0;z-index:100;transition:transform .45s var(--ease),background-color .35s,border-color .35s;border-bottom:1px solid transparent}
-.nav--solid{background-color:rgba(0,0,0,.96);border-bottom-color:var(--line)}
+.nav--solid{background-color:#000000;border-bottom-color:transparent}
 .nav--hidden{transform:translateY(-102%)}
 .nav__in{max-width:var(--max);margin:0 auto;padding:14px var(--gut);display:flex;align-items:center;gap:26px}
 .nav__logo{display:flex;align-items:center;gap:11px;text-decoration:none;color:var(--ink);flex:none;padding:6px 0}
@@ -115,7 +120,7 @@ ul,ol{margin:0;padding:0;list-style:none}
 }
 
 /* ---------- hero ---------- */
-.hero{position:relative;min-height:100svh;display:flex;align-items:flex-end;overflow:hidden}
+.hero{position:relative;min-height:min(80svh,780px);padding-top:96px;box-sizing:border-box;display:flex;align-items:flex-end;overflow:hidden}
 /* De beeldlaag is 24% groter dan de hero, zodat de parallax nooit een rand toont. */
 .hero__media{position:absolute;inset:-12% 0;z-index:0;will-change:transform;
   }
@@ -125,13 +130,15 @@ ul,ol{margin:0;padding:0;list-style:none}
 /* De sluier staat BUITEN de bewegende laag; anders drijft hij onder de tekst weg.
    Donker, maar licht genoeg dat de video goed zichtbaar blijft. */
 .hero__scrim{position:absolute;inset:0;z-index:1;pointer-events:none;background:
+  radial-gradient(48% 52% at 92% 18%,rgba(125,4,230,.50),rgba(125,4,230,0) 72%),
+  radial-gradient(40% 46% at 96% 100%,rgba(250,138,0,.42),rgba(250,138,0,0) 72%),
   linear-gradient(180deg,rgba(0,0,0,.84) 0%,rgba(0,0,0,.42) 14%,
   rgba(0,0,0,.18) 34%,rgba(0,0,0,.36) 60%,rgba(0,0,0,.78) 100%)}
 .hero__in{position:relative;z-index:2;max-width:var(--max);margin:0 auto;width:100%;
   padding:0 var(--gut) clamp(64px,11vh,120px)}
 /* Donkere sluier alleen achter het tekstvlak, zodat de video elders helderder mag blijven. */
 .hero__in::before{content:"";position:absolute;z-index:-1;left:calc(50% - 50vw);right:8%;top:-40px;bottom:0;pointer-events:none;
-  background:linear-gradient(90deg,rgba(0,0,0,.80) 0%,rgba(0,0,0,.80) 80%,rgba(0,0,0,0) 100%);
+  background:linear-gradient(90deg,rgba(0,0,0,.68) 0%,rgba(0,0,0,.68) 80%,rgba(0,0,0,0) 100%);
   -webkit-mask-image:linear-gradient(180deg,transparent 0%,#000 14%);mask-image:linear-gradient(180deg,transparent 0%,#000 14%)}
 /* Smal scherm: tekst loopt tot de rand, dus de vervaging valt buiten beeld (hero knipt af). */
 @media (max-width:600px){.hero__in::before{right:-25%}}
@@ -173,9 +180,9 @@ section{position:relative}
 }
 
 /* ---------- merkenband (zweeft op de achtergrond) ---------- */
-.merken{padding:clamp(28px,4vh,44px) 0 clamp(40px,6vh,72px);background:#FBF7F1}
+.merken{padding:clamp(28px,4vh,44px) 0 clamp(40px,6vh,72px);background:#FA8A00}
 .merken__kop{max-width:var(--max);margin:0 auto clamp(20px,3vh,32px);padding:0 var(--gut);
-  font-size:13px;font-weight:600;color:#6F6659}
+  font-size:13px;font-weight:600;color:#000000}
 /* Klemmen zit hier, niet meer op .merken zelf, en met 32px speling aan
    weerskanten (via negatieve margin + evenveel padding terug). Zonder die
    speling knipte een vergroot logo (hover, scale 1.28) hard af zodra het
@@ -206,7 +213,7 @@ section{position:relative}
    Culinair Plaza") -- die moeten hun eigen breedte kunnen houden, anders
    loopt de tekst met white-space:nowrap over de buren heen. */
 .merken__spoor li{white-space:nowrap;font-size:clamp(.95rem,1.5vw,1.15rem);font-weight:600;
-  letter-spacing:-.01em;color:#6F6659}
+  letter-spacing:-.01em;color:#000000}
 .merken__spoor li:has(img){width:156px;flex:none;display:flex;align-items:center;justify-content:center;text-align:center}
 .merken__spoor img{box-sizing:content-box;max-height:34px;max-width:120px;width:auto;height:auto;object-fit:contain;}
 /* De band loopt met GSAP zodra dat geladen is; dan zet main.js de class
@@ -538,3 +545,120 @@ section[id]{scroll-margin-top:82px}
 .anim .revcheck__ster{display:inline-block;opacity:0;transform:translateY(6px) scale(.7);
   animation:revcheck-ster .3s var(--ease) both;animation-delay:calc(var(--i,0) * 70ms)}
 @keyframes revcheck-ster{to{opacity:1;transform:none}}
+
+
+/* =====================================================================
+   KLEUR EN BEWEGING (02-11-2026)
+   Zwart #000 / #191919 als basis, oranje #FA8A00 en paars #7D04E6 als hele
+   vlakken. Geen rood. Geen wit op oranje (zwart wel). Paars alleen als vlak
+   met witte tekst, of (licht) in grote koppen. Teksten staan altijd op een
+   effen vlak, nooit op het verloop zelf (contrast).
+   ===================================================================== */
+::selection{background:#FA8A00;color:#000000}
+.voortgang{background:linear-gradient(90deg,#FA8A00,#B266FF)}
+
+/* kleurvlakken: variabelen lokaal omzetten, dan volgt alle tekst vanzelf */
+.merken,.diensten,.webbouw{--ink:#000000;--muted:#000000;--accent:#000000;
+  --line:rgba(0,0,0,.30);--line-2:rgba(0,0,0,.45);--sand:rgba(0,0,0,.12);
+  --blok:#7D04E6;background-color:#FA8A00;color:#000000;border-top:0}
+.pillar--flip,.castingband,.cta{--ink:#FFFFFF;--muted:#F1E6FF;--accent:#FFFFFF;
+  --line:rgba(255,255,255,.38);--line-2:rgba(255,255,255,.5);--sand:rgba(255,255,255,.16);
+  --blok:#FA8A00;background-color:#7D04E6;color:#FFFFFF;border-top:0}
+.cta .form{--ink:#DCE1E0;--muted:#A3ABAA;--accent:#FA8A00;--line:#2A2A2A;--line-2:#3A3A3A;--sand:#262626;color:#DCE1E0}
+.pillar--flip{box-shadow:0 0 0 100vmax #7D04E6;clip-path:inset(0 -100vmax)}
+.pillar--flip+.pillar,.pillar+.pillar--flip{border-top:0}
+
+/* knoppen op een kleurvlak: zwart met witte tekst */
+.merken .btn--primary,.diensten .btn--primary,.webbouw .btn--primary,
+.pillar--flip .btn--primary,.castingband .btn--primary,.cta__txt .btn--primary{
+  background-image:none;background-color:#000000;color:#FFFFFF}
+.merken .btn--ghost,.diensten .btn--ghost,.webbouw .btn--ghost,
+.pillar--flip .btn--ghost,.castingband .btn--ghost,.cta__txt .btn--ghost{
+  color:var(--ink);border-color:var(--ink)}
+.eyebrow{color:var(--accent)}
+
+/* grote koppen op zwart: bewegend verloop oranje naar licht paars (grote tekst, >= 3:1) */
+.work .sec__head h2,.reviews .sec__head h2,.packages .sec__head h2,.ster__in h2,.pillars .sec__head h2{
+  color:#FA8A00;background:linear-gradient(95deg,#FA8A00 0%,#FFB347 30%,#B266FF 65%,#FA8A00 100%);
+  background-size:250% 100%;-webkit-background-clip:text;background-clip:text;
+  -webkit-text-fill-color:transparent;padding-bottom:.08em}
+
+/* gloed achter zwarte secties; main.js schuift hem mee met de scroll (--gy) */
+.packages,.ster,.reviews{overflow:hidden;isolation:isolate}
+.packages::before,.ster::before,.reviews::before{content:"";position:absolute;z-index:-1;
+  inset:-25% -15%;pointer-events:none;
+  background:radial-gradient(38% 38% at 14% 30%,rgba(250,138,0,.30),rgba(250,138,0,0) 70%),
+             radial-gradient(44% 44% at 86% 72%,rgba(125,4,230,.46),rgba(125,4,230,0) 70%);
+  transform:translate3d(0,var(--gy,0%),0)}
+.packages{background:#191919}
+.pack{transition:transform .4s var(--ease),box-shadow .4s var(--ease),border-color .4s var(--ease)}
+.pack--lift{border-color:#FA8A00;box-shadow:0 0 0 1px #FA8A00,0 24px 60px -24px rgba(250,138,0,.55)}
+
+/* beelden in kleurvlak-kaders, zoals de blokken van decodudes */
+.pillar__img{border:0;box-shadow:14px 14px 0 #7D04E6;transition:box-shadow .45s var(--ease),transform .45s var(--ease)}
+.pillar--flip .pillar__img{box-shadow:14px 14px 0 #FA8A00}
+.card__cat{color:#FA8A00}
+.card__kader{border-color:var(--line-2)}
+.review{border-color:var(--line-2)}
+.reviews .review:nth-child(3n+1){border-top:3px solid #FA8A00}
+.reviews .review:nth-child(3n+2){border-top:3px solid #7D04E6}
+.reviews .review:nth-child(3n+3){border-top:3px solid #B266FF}
+
+/* footer en menu: dunne verloopstreep */
+.foot{border-top:0}
+.foot::before{content:"";position:absolute;left:0;right:0;top:0;height:4px;z-index:1;
+  background:linear-gradient(90deg,#FA8A00,#7D04E6,#FA8A00);background-size:200% 100%}
+.nav--solid::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px;
+  background:linear-gradient(90deg,#FA8A00,#7D04E6,#FA8A00);background-size:200% 100%}
+.hero::after{content:"";position:absolute;left:0;right:0;bottom:0;height:6px;z-index:3;
+  background:linear-gradient(90deg,#FA8A00,#7D04E6,#FA8A00);background-size:200% 100%}
+.nav__links a::after{background:#FA8A00}
+.nav__links a:hover{color:#FA8A00}
+.nav__cta{box-shadow:none}
+
+@keyframes verloop{to{background-position:-200% 0}}
+@keyframes gloed{0%,100%{opacity:.85}50%{opacity:1}}
+@keyframes tint{0%,100%{transform:translate3d(0,0,0) scale(1)}50%{transform:translate3d(-3%,2%,0) scale(1.08)}}
+.anim .work .sec__head h2,.anim .reviews .sec__head h2,.anim .packages .sec__head h2,
+.anim .ster__in h2,.anim .pillars .sec__head h2{animation:verloop 9s linear infinite}
+.anim .foot::before,.anim .nav--solid::after,.anim .hero::after{animation:verloop 6s linear infinite}
+.anim .hero__scrim{animation:tint 14s ease-in-out infinite}
+.anim .packages::before,.anim .ster::before,.anim .reviews::before{animation:gloed 8s ease-in-out infinite}
+
+@media (hover:hover) and (pointer:fine){
+  .btn:hover{transform:translateY(-3px)}
+  .btn--primary:hover{box-shadow:0 12px 30px -10px rgba(250,138,0,.75)}
+  .merken .btn--primary:hover,.diensten .btn--primary:hover,.webbouw .btn--primary:hover{box-shadow:5px 5px 0 #7D04E6}
+  .pillar--flip .btn--primary:hover,.castingband .btn--primary:hover,.cta__txt .btn--primary:hover{box-shadow:5px 5px 0 #FA8A00}
+  .pillar:hover .pillar__img{box-shadow:6px 6px 0 #7D04E6;transform:translate(4px,4px)}
+  .pillar--flip:hover .pillar__img{box-shadow:6px 6px 0 #FA8A00}
+  a.card:hover .card__kader{border-color:#FA8A00;box-shadow:0 0 0 2px #FA8A00,10px 10px 0 #7D04E6}
+  .card__kader{transition:border-color .35s var(--ease),box-shadow .35s var(--ease)}
+  .pack:hover{transform:translateY(-6px)}
+  .review:hover{box-shadow:0 18px 34px -18px rgba(250,138,0,.55)}
+  .diensten__grid>div{transition:transform .4s var(--ease)}
+  .diensten__grid>div:hover{transform:translateY(-4px)}
+}
+@media (max-width:600px){
+  .pillar__img,.pillar--flip .pillar__img{box-shadow:10px 10px 0 #7D04E6}
+  .pillar--flip .pillar__img{box-shadow:10px 10px 0 #FA8A00}
+}
+@media (prefers-reduced-motion:reduce){
+  .hero__scrim,.foot::before,.nav--solid::after,.hero::after{animation:none!important}
+}
+
+/* Klantlogo's die van zichzelf licht zijn verdwijnen op de oranje balk
+   (gemeten < 3:1). Die zeven worden zwarte silhouetten (8,7:1). Logo's met
+   een eigen gekleurd vlak (De Maat Fabriek, Lumex, Sol de Janeiro) blijven
+   ongemoeid. Terugdraaien: deze regel verwijderen. */
+.merken__spoor li[data-merk="deryan"] img,
+.merken__spoor li[data-merk="easytoys"] img,
+.merken__spoor li[data-merk="oger"] img,
+.merken__spoor li[data-merk="shermanology"] img,
+.merken__spoor li[data-merk="the-eyden-berg"] img,
+.merken__spoor li[data-merk="undiemeister"] img,
+.merken__spoor li[data-merk="wellshave"] img{filter:brightness(0)}
+
+/* Anker naar het pakket Events & Aftermovies: de vaste menubalk mag de kop niet bedekken. */
+.pack{scroll-margin-top:110px}
+@media (max-width:600px){.hero__acts .btn{text-align:center;line-height:1.25}}

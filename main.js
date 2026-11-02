@@ -216,7 +216,8 @@ var INFO_MAIL = "info@voxmediahouse.nl";
         var doel = document.querySelector(href);
         if (!doel) { return; }
         ev.preventDefault();
-        var y = Math.max(0, doel.getBoundingClientRect().top + (window.scrollY || 0) - 70);
+        var marge = parseFloat(window.getComputedStyle(doel).scrollMarginTop) || 70;
+        var y = Math.max(0, doel.getBoundingClientRect().top + (window.scrollY || 0) - marge);
         if (schuif) {
           schuif(y);
           /* Vangnet: is er na een seconde niets gebeurd, spring dan alsnog. */
@@ -288,6 +289,15 @@ var INFO_MAIL = "info@voxmediahouse.nl";
     gsap.fromTo(im, { yPercent: -5, scale: 1.11 }, {
       yPercent: 5, scale: 1.11, ease: "none",
       scrollTrigger: { trigger: im.parentNode, start: "top bottom", end: "bottom top", scrub: .8 }
+    });
+  });
+
+  /* Kleurgloed achter de zwarte secties schuift mee met de scroll (CSS-variabele
+     --gy, gelezen door ::before in styles.css). */
+  gsap.utils.toArray(".packages, .ster, .reviews").forEach(function (sec) {
+    gsap.fromTo(sec, { "--gy": "-14%" }, {
+      "--gy": "14%", ease: "none",
+      scrollTrigger: { trigger: sec, start: "top bottom", end: "bottom top", scrub: .8 }
     });
   });
 
