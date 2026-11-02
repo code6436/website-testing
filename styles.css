@@ -127,8 +127,9 @@ ul,ol{margin:0;padding:0;list-style:none}
 .hero__in::before{content:"";position:absolute;z-index:-1;left:calc(50% - 50vw);right:8%;top:-40px;bottom:0;pointer-events:none;
   background:linear-gradient(90deg,rgba(0,0,0,.68) 0%,rgba(0,0,0,.68) 80%,rgba(0,0,0,0) 100%);
   -webkit-mask-image:linear-gradient(180deg,transparent 0%,#000 14%);mask-image:linear-gradient(180deg,transparent 0%,#000 14%)}
-/* Smal scherm: tekst loopt tot de rand, dus de vervaging valt buiten beeld (hero knipt af). */
-@media (max-width:600px){.hero__in::before{right:-25%}}
+/* Smal scherm: tekst loopt tot de rand, dus de vervaging valt buiten beeld (hero knipt af).
+   De sluier begint hoger, zodat de uitloop boven merkteken en kop valt en niet erachter. */
+@media (max-width:600px){.hero__in::before{right:-25%;top:-140px}}
 .hero__mark{color:var(--ink);width:clamp(44px,5vw,56px);height:auto;margin-bottom:26px}
 .hero__title{font-size:clamp(2.35rem,6.4vw,5rem);max-width:17ch;letter-spacing:-.03em;line-height:1.02}
 .hero__sub{margin-top:20px;font-size:clamp(1rem,1.5vw,1.2rem);color:var(--ink);max-width:46ch}

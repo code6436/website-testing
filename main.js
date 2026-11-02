@@ -77,13 +77,17 @@ var INFO_MAIL = "info@voxmediahouse.nl";
       .then(function (r) { return r.ok ? r.json() : null; })
       .then(function (lijst) {
         if (!lijst) { return; }
+        var maten = lijst._maten || {};
         Object.keys(lijst).forEach(function (merk) {
           var bestand = lijst[merk];
-          if (!bestand) { return; }
+          if (!bestand || typeof bestand !== "string") { return; }
           band.querySelectorAll("[data-merk=\"" + merk + "\"]").forEach(function (li) {
             var naam = li.textContent.trim();
             var img = document.createElement("img");
             img.alt = naam;
+            /* Echte afmetingen (logos.json, _maten): geeft de browser de verhouding
+               vooraf. De CSS-hoogte en -breedte blijven bepalend. */
+            if (maten[bestand]) { img.width = maten[bestand][0]; img.height = maten[bestand][1]; }
             /* Niet lazy: de band staat boven de vouw en een logo met breedte
                auto heeft voor het laden nul oppervlak, waardoor de browser het
                laden eindeloos uitstelt. Samen zijn ze een paar honderd kB. */
@@ -143,6 +147,10 @@ var INFO_MAIL = "info@voxmediahouse.nl";
     /2g|slow-2g/.test(navigator.connection.effectiveType || ""));
   if (video && animOn && !zuinig) {
     var bron = video.getAttribute("data-src");
+    /* Smal scherm: lichtere 720p-versie (ca. 4,5 MB) in plaats van de 1080p-bron. */
+    if (bron && window.matchMedia && window.matchMedia("(max-width:768px)").matches) {
+      bron = bron.replace(/\.mp4$/, "-720.mp4");
+    }
     if (bron) {
       video.addEventListener("canplay", function () {
         video.classList.add("is-on");
