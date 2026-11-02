@@ -1,0 +1,8 @@
+# Werkbestanden, geen onderdeel van de site
+_logowerk/
+node_modules/
+*.log
+
+# De uitleverset wordt opnieuw gebouwd uit deze map
+../voxmediahouse-drop/
+.claude/settings.local.json

@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta name="robots" content="noindex,nofollow">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<title>Casting - meld je aan als talent | VOX Media House</title>
+<meta name="description" content="Meld je aan als talent bij VOX Media House. Past je profiel bij een campagne, dan nemen we contact op.">
+<meta name="theme-color" content="#000000">
+<link rel="canonical" href="https://voxmediahouse.nl/casting.html">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<link rel="preload" href="assets/fonts/instrument-sans-2.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="styles.css">
+<script>(function(){var r=window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches;document.documentElement.className+=r?" js":" js anim";})();</script>
+</head>
+<body>
+<a class="skip" href="#hoofd">Naar de inhoud</a>
+<header class="nav" id="nav">
+  <div class="nav__in">
+    <a class="nav__logo" href="index.html" aria-label="VOX Media House, naar de homepage">
+      <svg viewBox="0 0 64 64" width="30" height="30" aria-hidden="true" focusable="false">
+        <circle cx="32" cy="32" r="23" fill="none" stroke="currentColor" stroke-width="5"/>
+        <path d="M22 21 L32 43 L42 21" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="square"/>
+        <path d="M12.1 20.5 A23 23 0 0 0 12.1 43.5" fill="none" stroke="#B9944A" stroke-width="5" stroke-linecap="round"/>
+      </svg>
+      <span class="nav__name"><b>VOX</b><i>MEDIA HOUSE</i></span>
+    </a>
+    <button class="nav__toggle" type="button" id="navknop" aria-expanded="false" aria-controls="navmenu" aria-label="Menu openen">
+      <span></span><span></span>
+    </button>
+    <div class="nav__panel" id="navmenu">
+      <nav class="nav__links" aria-label="Hoofdmenu">
+        <a href="index.html#pijlers">Wat we doen</a>
+        <a href="index.html#events">Events</a>
+        <a href="index.html#werk">Werk</a>
+        <a href="index.html#packages">Packages</a>
+        <a href="casting.html" aria-current="page">Casting</a>
+      </nav>
+      <a class="btn btn--primary btn--sm nav__cta" href="index.html#contact">Strategiesessie</a>
+    </div>
+  </div>
+</header>
+<div class="voortgang" aria-hidden="true"></div>
+<main id="hoofd">
+<section class="casting">
+  <div class="casting__in">
+    <p class="badge">Casting</p>
+    <h1>Meld je aan als talent</h1>
+    <p class="casting__intro">VOX Media House zoekt regelmatig nieuwe gezichten voor campagnes. Meld je hieronder aan. Past je profiel bij een opdracht, dan nemen we contact met je op.</p>
+    <h2 class="sr-only">Aanmeldformulier</h2>
+
+    <form class="form casting__form" name="casting" method="POST" action="/casting-bedankt.html" enctype="multipart/form-data" data-netlify="true" data-netlify-honeypot="bot-field">
+      <input type="hidden" name="form-name" value="casting">
+      <p class="form__val" aria-hidden="true"><label>Niet invullen: <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
+
+      <fieldset>
+        <legend>Voor wie is deze aanmelding?</legend>
+        <div class="field">
+          <label for="c-voor">Aanmelding voor</label>
+          <select id="c-voor" name="aanmelding_voor" required>
+            <option value="">Kies een optie</option>
+            <option>Voor mezelf</option>
+            <option>Voor mijn kind</option>
+            <option>Voor mezelf en mijn kind(eren)</option>
+          </select>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Over het talent</legend>
+        <p class="form__hint">Meld je een kind aan, vul hier dan de gegevens van je kind in.</p>
+        <div class="field">
+          <label for="c-voornaam">Voornaam</label>
+          <input id="c-voornaam" name="voornaam" type="text" autocomplete="given-name" required>
+        </div>
+        <div class="field">
+          <label for="c-achternaam">Achternaam</label>
+          <input id="c-achternaam" name="achternaam" type="text" autocomplete="family-name" required>
+        </div>
+        <div class="field">
+          <label for="c-geboortedatum">Geboortedatum</label>
+          <input id="c-geboortedatum" name="geboortedatum" type="date" required>
+        </div>
+        <div class="field">
+          <label for="c-geslacht">Geslacht</label>
+          <select id="c-geslacht" name="geslacht" required>
+            <option value="">Kies een optie</option>
+            <option>Vrouw</option>
+            <option>Man</option>
+            <option>Meisje</option>
+            <option>Jongen</option>
+            <option>Anders</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="c-lengte">Lengte in cm</label>
+          <input id="c-lengte" name="lengte_cm" type="number" min="40" max="230" inputmode="numeric">
+        </div>
+        <div class="field">
+          <label for="c-kledingmaat">Kledingmaat</label>
+          <input id="c-kledingmaat" name="kledingmaat" type="text" placeholder="bijv. M, 38 of 116">
+        </div>
+        <div class="field">
+          <label for="c-schoenmaat">Schoenmaat</label>
+          <input id="c-schoenmaat" name="schoenmaat" type="text" placeholder="bijv. 39 of 28">
+        </div>
+        <div class="field">
+          <label for="c-haarkleur">Haarkleur</label>
+          <select id="c-haarkleur" name="haarkleur">
+            <option value="">Kies een optie</option>
+            <option>Blond</option>
+            <option>Bruin</option>
+            <option>Zwart</option>
+            <option>Rood</option>
+            <option>Grijs</option>
+            <option>Anders</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="c-oogkleur">Oogkleur</label>
+          <select id="c-oogkleur" name="oogkleur">
+            <option value="">Kies een optie</option>
+            <option>Blauw</option>
+            <option>Groen</option>
+            <option>Bruin</option>
+            <option>Grijs</option>
+            <option>Anders</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="c-woonplaats">Woonplaats</label>
+          <input id="c-woonplaats" name="woonplaats" type="text" autocomplete="address-level2" required>
+        </div>
+        <div class="field">
+          <label for="c-bijzonderheden">Bijzonderheden</label>
+          <input id="c-bijzonderheden" name="bijzonderheden" type="text" placeholder="bijv. tatoeages, sproeten, tweeling, rolstoel">
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Samen met je kind(eren)</legend>
+        <p class="form__hint">Alleen invullen als je je samen met je kind(eren) aanmeldt.</p>
+        <div class="field">
+          <label for="c-kinderen">Gegevens kinderen</label>
+          <textarea id="c-kinderen" name="kinderen" rows="3" placeholder="Per kind: voornaam, geboortedatum, jongen of meisje, kledingmaat"></textarea>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Ervaring</legend>
+        <div class="field">
+          <label for="c-instagram">Instagram</label>
+          <input id="c-instagram" name="instagram" type="text" placeholder="@gebruikersnaam">
+        </div>
+        <div class="field">
+          <label for="c-talen">Talen</label>
+          <input id="c-talen" name="talen" type="text" placeholder="bijv. Nederlands, Engels">
+        </div>
+        <div class="field">
+          <label for="c-ervaring">Ervaring</label>
+          <textarea id="c-ervaring" name="ervaring" rows="4" placeholder="Eerdere shoots, campagnes of acteerwerk. Geen ervaring? Geen probleem."></textarea>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Foto's</legend>
+        <p class="form__hint">Samen maximaal 8 MB.</p>
+        <div class="field">
+          <label for="c-foto-voor">Onbewerkte foto vooraanzicht</label>
+          <input id="c-foto-voor" name="foto_vooraanzicht" type="file" accept="image/*">
+        </div>
+        <div class="field">
+          <label for="c-foto-zij">Onbewerkte foto zijaanzicht</label>
+          <input id="c-foto-zij" name="foto_zijaanzicht" type="file" accept="image/*">
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Contact</legend>
+        <div class="field">
+          <label for="c-naam-contact">Jouw naam (ouder of verzorger als je een kind aanmeldt)</label>
+          <input id="c-naam-contact" name="naam_contact" type="text" autocomplete="name" required>
+        </div>
+        <div class="field">
+          <label for="c-email">E-mailadres</label>
+          <input id="c-email" name="email" type="email" autocomplete="email" required>
+        </div>
+        <div class="field">
+          <label for="c-telefoon">Telefoonnummer</label>
+          <input id="c-telefoon" name="telefoon" type="tel" autocomplete="tel" required>
+        </div>
+      </fieldset>
+
+
+      <label class="check">
+        <input type="checkbox" name="toestemming_gegevens" value="ja" required>
+        <span>Ik geef VOX Media House toestemming om deze gegevens te bewaren in het castingbestand en mij te benaderen voor campagnes. Lees meer in de <a href="privacy.html#casting">privacyverklaring</a>.</span>
+      </label>
+      <label class="check">
+        <input type="checkbox" name="toestemming_leeftijd" value="ja" required>
+        <span>Ik ben 16 jaar of ouder. Meld ik een kind aan, dan ben ik de ouder of wettelijk verzorger.</span>
+      </label>
+
+      <button class="btn btn--primary btn--full" type="submit">Aanmelding versturen</button>
+      <p class="form__note" id="castingnote" role="status"></p>
+    </form>
+  </div>
+</section>
+</main>
+
+<footer class="foot">
+  <div class="foot__in">
+    <p class="foot__merk">VOX Media House</p>
+    <div class="foot__cols">
+      <div>
+        <h3>Contact</h3>
+        <p><a href="mailto:info@voxmediahouse.nl">info@voxmediahouse.nl</a><br><a href="tel:+31619020080">06 19 02 00 80</a><br><a href="https://www.instagram.com/voxmediahouse.nl/" rel="me noopener" target="_blank">@voxmediahouse.nl</a></p>
+      </div>
+      <div>
+        <h3>Bedrijfsgegevens</h3>
+        <p>VOX Media House<br>
+        Mijndenhof 52, 1106 GN Amsterdam<br>
+        KvK 58717269 &middot; Btw NL002226678B74</p>
+      </div>
+      <div>
+        <h3>Diensten</h3>
+        <p>The Campaign Room<br>The Social Suite<br>Events &amp; Aftermovies<br>Bedrijfsvideo's<br>Product Studio</p>
+      </div>
+    </div>
+    <p class="foot__rule">&copy; <span id="jaar">2026</span> VOX Media House &middot; <a href="privacy.html">Privacy en cookies</a></p>
+  </div>
+</footer>
+<script src="assets/vendor/gsap.min.js" defer></script>
+<script src="assets/vendor/ScrollTrigger.min.js" defer></script>
+<script src="assets/vendor/lenis.min.js" defer></script>
+<script src="main.js" defer></script>
+</body>
+</html>

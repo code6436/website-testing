@@ -1,0 +1,544 @@
+/* Instrument Sans, SIL Open Font License 1.1. Zelf gehost: zo gaat er geen
+   bezoekersgegeven naar Google en is er geen toestemming nodig. Een variabel
+   bestand per subset dekt alle gewichten van 400 tot 700. */
+@font-face{font-family:'Instrument Sans';font-style:normal;font-weight:400 700;
+  font-stretch:100%;font-display:swap;src:url(assets/fonts/instrument-sans-2.woff2) format('woff2');
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:'Instrument Sans';font-style:normal;font-weight:400 700;
+  font-stretch:100%;font-display:swap;src:url(assets/fonts/instrument-sans-1.woff2) format('woff2');
+  unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+
+/* VOX Media House — 2026-09-21 */
+
+:root{
+  color-scheme:dark;
+  --bg:#000000;
+  --bg-2:#191919;
+  --sand:#262626;
+  --line:#2A2A2A;
+  --line-2:#3A3A3A;
+  --ink:#DCE1E0;
+  --muted:#A3ABAA;
+  --muted-op-zand:#B4BCBB;
+  --accent:#B9944A;
+  --goud:#B9944A;
+  --knop:#FA8A00;
+  --accent-ink:#000000;
+  --fout:#FFB066;
+  --gut:clamp(20px,5vw,72px);
+  --max:1240px;
+  --r:14px;
+  --ease:cubic-bezier(.22,.61,.36,1);
+  --font:"Instrument Sans",ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+}
+
+*,*::before,*::after{box-sizing:border-box}
+/* overflow-x:hidden staat op zowel html als body. Alleen op body zetten
+   bleek niet genoeg: de browser laat de pagina dan alsnog 32px opzij
+   scrollen (gemeten, niet aangenomen) zodra .merken__band iets breder is
+   dan het scherm -- nodig voor de speling bij het vergroten van een logo
+   bij hover. */
+html{-webkit-text-size-adjust:100%;overflow-x:hidden}
+html,body{margin:0;padding:0}
+body{
+  background:var(--bg);color:var(--ink);font-family:var(--font);
+  font-size:17px;line-height:1.6;font-weight:400;
+  -webkit-font-smoothing:antialiased;overflow-x:hidden;
+}
+img,svg,video{display:block;max-width:100%}
+img{height:auto}
+a{color:inherit}
+h1,h2,h3{margin:0;font-weight:600;letter-spacing:-.025em;line-height:1.08}
+p{margin:0}
+ul,ol{margin:0;padding:0;list-style:none}
+
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+.skip{position:absolute;left:-9999px;top:0;z-index:200;background:var(--accent);color:var(--accent-ink);padding:12px 18px;border-radius:0 0 10px 0;font-weight:600}
+.skip:focus{left:0}
+
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:4px}
+
+.tbd{
+  display:inline-block;font-size:.78em;font-weight:600;letter-spacing:.04em;
+  color:var(--accent);border:1px dashed rgba(185,148,74,.55);
+  padding:1px 8px;border-radius:999px;
+}
+
+/* ---------- knoppen ---------- */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:10px;
+  padding:15px 26px;border-radius:999px;border:1px solid transparent;
+  background-clip:padding-box;-webkit-background-clip:padding-box;
+  font-size:15px;font-weight:600;letter-spacing:-.01em;text-decoration:none;
+  cursor:pointer;transition:transform .35s var(--ease),background-color .25s,border-color .25s,color .25s;
+}
+.btn--primary{background-color:var(--knop);color:#000000}
+.btn--primary:hover{background-color:#FFA033}
+.btn--ghost{background-color:transparent;color:var(--ink);border-color:var(--line-2)}
+.btn--ghost:hover{border-color:var(--ink)}
+.btn--sm{padding:11px 20px;font-size:14px}
+.btn--full{width:100%;margin-top:26px}
+
+/* ---------- navigatie ---------- */
+.nav{position:fixed;inset:0 0 auto 0;z-index:100;transition:transform .45s var(--ease),background-color .35s,border-color .35s;border-bottom:1px solid transparent}
+.nav--solid{background-color:rgba(0,0,0,.96);border-bottom-color:var(--line)}
+.nav--hidden{transform:translateY(-102%)}
+.nav__in{max-width:var(--max);margin:0 auto;padding:14px var(--gut);display:flex;align-items:center;gap:26px}
+.nav__logo{display:flex;align-items:center;gap:11px;text-decoration:none;color:var(--ink);flex:none;padding:6px 0}
+.nav__name{display:flex;flex-direction:column;line-height:1}
+.nav__name b{font-size:19px;font-weight:700;letter-spacing:.06em}
+.nav__name i{font-style:normal;font-size:9px;font-weight:500;letter-spacing:.155em;color:var(--muted);margin-top:4px}
+.nav__panel{display:flex;align-items:center;gap:26px;margin-left:auto}
+.nav__links{display:flex;gap:28px}
+/* Lichter dan de gedempte tekst elders: bovenin de hero staat de balk
+   doorzichtig over het beeld, en var(--muted) haalde daar geen 4,5:1. */
+.nav__links a{text-decoration:none;color:var(--ink);font-size:15px;padding:8px 0;transition:color .2s}
+.nav__links a:hover{color:#FFFFFF}
+.nav__toggle{display:none}
+
+@media (max-width:860px){
+  .nav__toggle{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;
+    margin-left:auto;width:44px;height:44px;padding:0;border:0;background:none;cursor:pointer}
+  .nav__toggle span{display:block;width:22px;height:2px;background:var(--ink);border-radius:2px;
+    transition:transform .3s var(--ease)}
+  .nav__toggle[aria-expanded="true"] span:first-child{transform:translateY(4px) rotate(45deg)}
+  .nav__toggle[aria-expanded="true"] span:last-child{transform:translateY(-4px) rotate(-45deg)}
+  .nav__panel{position:absolute;left:0;right:0;top:100%;margin:0;
+    flex-direction:column;align-items:stretch;gap:0;padding:4px var(--gut) 24px;
+    background-color:var(--bg);border-bottom:1px solid var(--line);
+    opacity:0;transform:translateY(-10px);pointer-events:none;
+    transition:opacity .25s var(--ease),transform .25s var(--ease)}
+  .nav__panel.is-open{opacity:1;transform:none;pointer-events:auto}
+  .nav__links{flex-direction:column;gap:0}
+  .nav__links a{padding:15px 2px;font-size:17px;color:var(--ink);border-bottom:1px solid var(--line)}
+  .nav__cta{margin-top:20px;width:100%}
+}
+
+/* ---------- hero ---------- */
+.hero{position:relative;min-height:100svh;display:flex;align-items:flex-end;overflow:hidden}
+/* De beeldlaag is 24% groter dan de hero, zodat de parallax nooit een rand toont. */
+.hero__media{position:absolute;inset:-12% 0;z-index:0;will-change:transform;
+  }
+.hero__poster,.hero__video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.hero__video{opacity:0;transition:opacity .8s var(--ease)}
+.hero__video.is-on{opacity:1}
+/* De sluier staat BUITEN de bewegende laag; anders drijft hij onder de tekst weg.
+   Donker, maar licht genoeg dat de video goed zichtbaar blijft. */
+.hero__scrim{position:absolute;inset:0;z-index:1;pointer-events:none;background:
+  linear-gradient(180deg,rgba(0,0,0,.84) 0%,rgba(0,0,0,.42) 14%,
+  rgba(0,0,0,.18) 34%,rgba(0,0,0,.36) 60%,rgba(0,0,0,.78) 100%)}
+.hero__in{position:relative;z-index:2;max-width:var(--max);margin:0 auto;width:100%;
+  padding:0 var(--gut) clamp(64px,11vh,120px)}
+/* Donkere sluier alleen achter het tekstvlak, zodat de video elders helderder mag blijven. */
+.hero__in::before{content:"";position:absolute;z-index:-1;left:calc(50% - 50vw);right:8%;top:-40px;bottom:0;pointer-events:none;
+  background:linear-gradient(90deg,rgba(0,0,0,.80) 0%,rgba(0,0,0,.80) 80%,rgba(0,0,0,0) 100%);
+  -webkit-mask-image:linear-gradient(180deg,transparent 0%,#000 14%);mask-image:linear-gradient(180deg,transparent 0%,#000 14%)}
+/* Smal scherm: tekst loopt tot de rand, dus de vervaging valt buiten beeld (hero knipt af). */
+@media (max-width:600px){.hero__in::before{right:-25%}}
+.hero__mark{color:var(--ink);width:clamp(44px,5vw,56px);height:auto;margin-bottom:26px}
+.hero__title{font-size:clamp(2.35rem,6.4vw,5rem);max-width:17ch;letter-spacing:-.035em}
+.hero__sub{margin-top:20px;font-size:clamp(1rem,1.5vw,1.2rem);color:var(--ink);max-width:46ch}
+.hero__acts{margin-top:36px;display:flex;gap:12px;flex-wrap:wrap}
+.hero__hint{position:absolute;left:50%;bottom:22px;z-index:2;width:1px;height:46px;
+  background:linear-gradient(180deg,transparent,var(--line-2));overflow:hidden}
+.hero__hint span{display:block;width:1px;height:14px;background:var(--accent)}
+.anim .hero__hint span{animation:drip 2.4s var(--ease) infinite}
+@keyframes drip{0%{transform:translateY(-16px)}70%{transform:translateY(46px)}100%{transform:translateY(46px)}}
+
+/* ---------- secties ---------- */
+section{position:relative}
+.sec__head{max-width:var(--max);margin:0 auto;padding:0 var(--gut);margin-bottom:clamp(34px,5vw,58px)}
+.sec__head h2{font-size:clamp(1.9rem,3.7vw,3rem)}
+.sec__head p{color:var(--muted);margin-top:12px;font-size:1.05rem}
+.eyebrow{font-size:13px;font-weight:600;color:var(--accent);margin-bottom:14px;font-variant-numeric:tabular-nums}
+
+/* ---------- pijlers ---------- */
+.pillar{max-width:var(--max);margin:0 auto;padding:clamp(64px,12vh,150px) var(--gut);
+  display:grid;grid-template-columns:1fr 1fr;gap:clamp(30px,6vw,90px);align-items:center}
+.pillar+.pillar{border-top:1px solid var(--line)}
+.pillar--flip .pillar__txt{order:2}
+.pillar__txt h3{font-size:clamp(1.75rem,3.4vw,2.9rem)}
+.pillar__txt p{color:var(--muted);margin-top:18px;max-width:42ch;font-size:1.06rem}
+.pillar__img{margin:0;overflow:hidden;border-radius:var(--r);background:var(--sand);
+  border:1px solid var(--line-2);box-sizing:border-box}
+.pillar__img img{width:100%}
+/* WhatsApp-CTA in de events-pijler: laagdrempelig alternatief naast het
+   formulier verderop -- direct een bericht sturen in plaats van een
+   formulier invullen en op een e-mail wachten. */
+.events__whatsapp{margin-top:26px}
+.events__belofte{margin-top:12px;color:var(--muted);font-size:.9rem}
+@media (max-width:820px){
+  .pillar{grid-template-columns:1fr;gap:28px}
+  .pillar--flip .pillar__txt{order:0}
+}
+
+/* ---------- merkenband (zweeft op de achtergrond) ---------- */
+.merken{padding:clamp(28px,4vh,44px) 0 clamp(40px,6vh,72px);border-top:1px solid var(--line);
+  border-bottom:1px solid var(--line)}
+.merken__kop{max-width:var(--max);margin:0 auto clamp(20px,3vh,32px);padding:0 var(--gut);
+  font-size:13px;font-weight:600;color:var(--muted)}
+/* Klemmen zit hier, niet meer op .merken zelf, en met 32px speling aan
+   weerskanten (via negatieve margin + evenveel padding terug). Zonder die
+   speling knipte een vergroot logo (hover, scale 1.28) hard af zodra het
+   dicht bij de rand van het scherm stond -- gemeten tot 24px overschrijding
+   bij een logo van de volle 165px breedte. De 32px is onzichtbaar: deze
+   sectie heeft geen eigen achtergrond, dus de extra ruimte toont gewoon de
+   paginakleur door. */
+/* overflow-x + overflow-y:visible werkt niet zoals bedoeld: zodra een van
+   de twee assen iets anders dan visible krijgt, dwingt de browser de
+   "vrije" as naar auto, en auto knipt zodra er iets buiten komt (met een
+   onzichtbare scrollmogelijkheid) -- functioneel hetzelfde als hidden.
+   clip-path heeft die koppeling niet: hier strak op de breedte (0 extra),
+   wijd open op de hoogte (-200px, ruim genoeg voor elke realistische
+   hover-vergroting). Een logo dat groter wordt mag zo vrij over de
+   boven- en onderrand heen gaan, zonder ooit te knippen. */
+.merken__band{display:grid;gap:14px;
+  /* Geen mask-image meer: die maakte de uiterste rand van de band doorzichtig,
+     en een logo dat daar precies staat werd bij het vergroten (scale 1.28) deels
+     in die doorzichtige zone geduwd -- zag eruit als half verborgen. Zonder fade
+     verschijnt/verdwijnt een logo aan de rand iets minder zacht, maar wordt nooit
+     meer gedeeltelijk onzichtbaar. */
+  clip-path:inset(-200px -32px -200px -32px)}
+.merken__rij{display:flex;width:max-content}
+.merken__spoor{display:flex;align-items:center;gap:clamp(28px,4vw,56px);padding-right:clamp(28px,4vw,56px);
+  flex:none;list-style:none;margin:0}
+/* Vast vak alleen voor merken MET een logo. Een merk zonder logo toont
+   gewoon de naam als tekst, en sommige namen zijn lang ("RSM Alkmaar
+   Culinair Plaza") -- die moeten hun eigen breedte kunnen houden, anders
+   loopt de tekst met white-space:nowrap over de buren heen. */
+.merken__spoor li{white-space:nowrap;font-size:clamp(.95rem,1.5vw,1.15rem);font-weight:600;
+  letter-spacing:-.01em;color:#8F9796}
+.merken__spoor li:has(img){width:156px;flex:none;display:flex;align-items:center;justify-content:center;text-align:center}
+/* Klantlogo's zijn donker op transparant (sommige volledig dekkend): op zwart
+   zouden ze verdwijnen, dus elk logo staat op een gedempte lichte tegel. */
+.merken__spoor img{box-sizing:content-box;max-height:34px;max-width:120px;width:auto;height:auto;object-fit:contain;
+  opacity:.8;background:var(--ink);padding:9px 14px;border-radius:8px}
+/* De band loopt met GSAP zodra dat geladen is; dan zet main.js de class
+   merken--js en verdwijnen deze keyframes. Laadt GSAP niet, dan blijft de
+   band gewoon lopen op eigen kracht. Alleen met GSAP kan hij versnellen
+   zonder te springen: een nieuwe animation-duration laat de browser de
+   verstreken tijd omrekenen en dat is zichtbaar als een sprong. */
+.merken__rij{will-change:transform}
+.merken__rij--links .merken__spoor{animation:schuif 68s linear infinite}
+.merken__rij--rechts .merken__spoor{animation:schuif 82s linear infinite reverse}
+@keyframes schuif{from{transform:translateX(0)}to{transform:translateX(-100%)}}
+.merken--js .merken__spoor{animation:none}
+
+/* ---------- badge en opsomming ---------- */
+.badge,.pillar__txt .badge{display:inline-block;background:var(--sand);color:var(--ink);
+  font-size:13px;font-weight:600;padding:6px 13px;border-radius:7px;margin:0 0 20px;max-width:none}
+.lijst{margin-top:22px;display:grid;gap:12px}
+.lijst li{position:relative;padding-left:22px;font-size:1rem;line-height:1.5}
+.lijst li::before{content:"";position:absolute;left:0;top:.68em;width:9px;height:1.5px;background:var(--accent)}
+
+/* woorden die tijdens het scrollen oplichten */
+[data-words] .w{display:inline-block}
+.anim [data-words] .w{color:#7C8584;transition:color .45s var(--ease)}
+.anim [data-words] .w.on{color:var(--ink)}
+
+/* ---------- werk ---------- */
+.work{padding:clamp(60px,10vh,140px) 0;border-top:1px solid var(--line)}
+.grid{max-width:var(--max);margin:0 auto;padding:0 var(--gut);
+  display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(14px,1.6vw,22px)}
+@media (max-width:900px){.grid{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:560px){.grid{grid-template-columns:1fr}}
+.card{text-decoration:none;display:block;transition:transform .4s var(--ease)}
+.card__kader{overflow:hidden;border-radius:var(--r);background:var(--sand);display:block;
+  border:1px solid var(--line-2);box-sizing:border-box}
+.card img{width:100%;display:block;transition:filter .4s var(--ease);will-change:transform}
+.card__cat{margin-top:14px;font-size:.8rem;font-weight:600;color:var(--accent)}
+.card h3{font-size:1.05rem;margin-top:4px}
+.card p{color:var(--muted);font-size:.94rem;margin-top:5px}
+a.card:hover{transform:translateY(-4px)}
+a.card:hover img{filter:brightness(1.04)}
+.pillar__img img{will-change:transform}
+.card.is-placeholder h3{color:#8F9796}
+
+/* ---------- packages ---------- */
+.packages{padding:clamp(60px,10vh,140px) 0;border-top:1px solid var(--line);background:var(--bg-2)}
+.packs{max-width:var(--max);margin:0 auto;padding:0 var(--gut);
+  display:grid;grid-template-columns:repeat(2,1fr);gap:clamp(14px,1.6vw,20px);align-items:stretch}
+@media (max-width:900px){.packs{grid-template-columns:1fr;max-width:580px}}
+.pack{background:var(--bg);border:1px solid var(--line-2);border-radius:18px;
+  padding:clamp(24px,2.4vw,34px);display:flex;flex-direction:column}
+.pack--lift{border-color:rgba(185,148,74,.6)}
+.pack h3{font-size:1.4rem}
+.pack__for{color:var(--muted);margin-top:10px;font-size:.97rem}
+.pack__price{margin:22px 0 4px;display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.pack__per{color:var(--muted);font-size:.88rem}
+.pack__aanvraag{font-size:1.05rem;font-weight:600;color:var(--ink)}
+.pack ul{margin:18px 0 26px;border-top:1px solid var(--line);padding-top:18px;display:grid;gap:11px}
+.pack li{position:relative;padding-left:22px;font-size:.97rem}
+.pack li::before,.cta__list li::before{content:"";position:absolute;left:0;top:.66em;width:9px;height:1.5px;background:var(--accent)}
+.pack .btn{margin-top:auto}
+.pack .btn--full{margin-top:auto}
+/* "of"-scheiding tussen de twee knoppen in het Events-pakket. .pack .btn{margin-top:auto}
+   geldt voor allebei de knoppen; alleen de eerste (Vraag offerte aan) moet naar
+   onderen geduwd worden voor gelijke kaarthoogte, de WhatsApp-knop erna niet. */
+.pack__of{margin:14px 0;text-align:center;color:var(--muted);font-size:.85rem}
+.pack .events__whatsapp{margin-top:0}
+
+.packs__note{max-width:var(--max);margin:clamp(24px,3vw,40px) auto 0;padding:0 var(--gut);color:var(--muted);font-size:.97rem}
+.packs__note a{color:var(--accent);display:inline-flex;align-items:center;min-height:44px}
+
+/* ---------- cta ---------- */
+.cta{padding:clamp(60px,11vh,150px) 0;border-top:1px solid var(--line)}
+.cta__in{max-width:var(--max);margin:0 auto;padding:0 var(--gut);
+  display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(32px,6vw,90px);align-items:start}
+@media (max-width:900px){.cta__in{grid-template-columns:1fr}}
+.cta__txt h2{font-size:clamp(1.95rem,4.2vw,3.3rem);max-width:15ch}
+.cta__txt p{color:var(--muted);margin-top:18px;max-width:44ch}
+.cta__list{margin-top:26px;display:grid;gap:10px}
+.cta__wie{margin-top:30px;padding-top:24px;border-top:1px solid var(--line);
+  color:var(--muted);font-size:.97rem;max-width:46ch}
+.cta__wie strong{color:var(--ink);font-weight:600}
+.cta__list li{padding-left:22px;position:relative;color:var(--muted)}
+/* Spamvalletje voor Netlify Forms: onzichtbaar voor mensen, wel nog in de
+   documentstroom en met een echte tabindex-uitsluiting. display:none of
+   visibility:hidden laten sommige spambots links liggen omdat ze precies
+   daarop controleren; positioneren buiten beeld werkt beter. */
+.form__val{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.form{background:var(--bg-2);border:1px solid var(--line);border-radius:18px;padding:clamp(22px,2.6vw,34px)}
+.field{margin-bottom:16px}
+.field label{display:block;font-size:13px;color:var(--muted);margin-bottom:7px}
+.field input,.field textarea{width:100%;background:#0D0D0D;border:1px solid var(--line-2);
+  border-radius:10px;color:var(--ink);font:inherit;font-size:16px;padding:13px 14px;resize:vertical}
+.field input:focus,.field textarea:focus{border-color:var(--accent);outline:none}
+.form__note{margin-top:14px;font-size:13px;color:var(--muted);text-align:center}
+.form__note.is-err{color:var(--fout)}
+.field input::placeholder,.field textarea::placeholder{color:var(--muted);opacity:.8}
+
+/* ---------- footer ---------- */
+.foot{position:relative;isolation:isolate;overflow:hidden;border-top:1px solid var(--line);
+  padding:clamp(44px,7vh,80px) 0 32px;background:var(--bg-2)}
+/* Achtergrondvideo: main.js laadt hem pas als de footer dichtbij komt. */
+.foot__media{position:absolute;inset:0;z-index:-2}
+.foot__video{width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .8s var(--ease)}
+.foot__video.is-on{opacity:1}
+.foot__scrim{position:absolute;inset:0;z-index:-1;pointer-events:none;
+  background:linear-gradient(180deg,rgba(0,0,0,.84) 0%,rgba(0,0,0,.80) 50%,rgba(0,0,0,.88) 100%)}
+.foot__in{max-width:var(--max);margin:0 auto;padding:0 var(--gut)}
+.foot__cols{margin-top:34px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:26px;max-width:780px}
+@media (max-width:640px){.foot__cols{grid-template-columns:1fr}}
+.foot__cols h3{font-size:13px;color:var(--muted);font-weight:600;margin-bottom:10px}
+.foot__cols p{margin-bottom:0;font-size:.94rem;color:var(--ink);line-height:1.6}
+/* Zonder eigen kleur vielen deze links terug op de standaard blauwe
+   browserlink -- de enige plek op de site waar dat nog gebeurde. */
+.foot__cols a{text-decoration:none;color:var(--ink);display:inline-flex;align-items:center;min-height:44px}
+.foot__cols a:hover{color:var(--accent)}
+.foot__rule{margin-top:40px;padding-top:20px;border-top:1px solid var(--line);color:var(--muted);font-size:13px}
+
+/* ---------- reveal ---------- */
+.anim .reveal{opacity:0;transform:translateY(26px) scale(.985)}
+.anim .reveal.is-in{opacity:1;transform:none}
+section[id]{scroll-margin-top:82px}
+
+/* ---------- bewegingsvoorkeur ---------- */
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;
+    transition-duration:.001ms!important;scroll-behavior:auto!important}
+  .reveal{opacity:1!important;transform:none!important}
+  [data-words] .w{color:var(--ink)!important}
+  .hero__hint{display:none}
+  .merken__spoor{animation:none!important}
+  .merken__rij{width:100%;flex-wrap:wrap}
+  .merken__rij .merken__spoor:last-child{display:none}
+  .merken__spoor{flex-wrap:wrap;row-gap:12px}
+}
+
+/* ---------- vakmanschapsregel ---------- */
+
+/* ---------- open kaart in het werkraster ---------- */
+.card--open img{opacity:.5}
+.card--open h3{color:var(--accent)}
+
+/* ---------- 404 ---------- */
+.mis{min-height:100svh;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;padding:40px var(--gut);gap:18px}
+.mis h1{font-size:clamp(2rem,5vw,3.4rem)}
+.mis p{color:var(--muted);max-width:42ch}
+
+/* ---------- muisgedrag ----------
+   Alles hieronder staat in een vraag naar het aanwijsapparaat. Een telefoon
+   heeft geen zwevende muis: daar zou :hover na een tik blijven plakken en
+   een logo groot blijven staan tot je ergens anders tikt. Vandaar
+   (hover:hover) en (pointer:fine) - dat sluit vingers en stylussen uit. */
+@media (hover:hover) and (pointer:fine){
+
+  /* Een logo waar je overheen gaat komt naar voren: groter, vol, scherp. */
+  .merken__spoor img{transition:transform .32s var(--ease),opacity .32s var(--ease),filter .32s var(--ease);
+    transform-origin:center}
+  .merken__spoor li:hover img{transform:scale(1.28);opacity:1}
+  .merken__spoor li{transition:color .32s var(--ease)}
+  .merken__spoor li:hover{color:var(--ink)}
+  /* Geldt voor elk logo, zonder uitzondering: het vergrote logo moet altijd
+     bovenop alles komen te liggen -- de buren in de rij, de rand van de
+     sectie, alles. Zonder een eigen stapelvolgorde (z-index) schilderen
+     latere buren in de broncode gewoon over een vergroot logo heen zodra
+     ze elkaar raken, want zonder positionering en z-index bepaalt de
+     volgorde in de HTML wie boven wie komt te liggen, niet de grootte.
+     position:relative is nodig, anders negeert de browser z-index. */
+  .merken__spoor li:has(img){position:relative;z-index:1}
+  .merken__spoor li:has(img):hover{z-index:20}
+
+  /* De rest van de band zakt iets terug, zodat het logo eruit springt
+     zonder dat er iets groots gebeurt. */
+  .merken__rij:hover .merken__spoor img{opacity:.5}
+  .merken__rij:hover .merken__spoor li:hover img{opacity:1}
+
+  /* De foto in een werkkaart komt een fractie naar je toe. */
+  .card__kader{transition:border-color .35s var(--ease)}
+  a.card:hover .card__kader{border-color:var(--line-2)}
+  a.card:hover img{filter:brightness(1.05) saturate(1.04)}
+
+  .btn--ghost:hover{color:var(--accent);border-color:var(--accent)}
+
+  /* Een knop met een pijl laat die pijl meelopen. */
+  .btn__pijl{display:inline-block;margin-left:9px;transition:transform .3s var(--ease)}
+  .btn:hover .btn__pijl{transform:translateX(4px)}
+
+  /* Een reviewkaart komt licht omhoog, zoals a.card:hover. */
+  .review:hover{transform:translateY(-4px);box-shadow:0 16px 28px -18px rgba(0,0,0,.9)}
+}
+
+/* De voortgangslijn bovenaan: dun, in de accentkleur, en alleen zichtbaar
+   zodra je begint te scrollen. Geeft je gevoel voor hoe lang de pagina is. */
+.voortgang{position:fixed;top:0;left:0;height:2px;width:100%;z-index:200;
+  transform:scaleX(0);transform-origin:0 50%;background:var(--accent);
+  pointer-events:none;opacity:0;transition:opacity .3s var(--ease)}
+.voortgang.is-aan{opacity:.9}
+
+/* De sectie waar je nu bent, licht op in het menu. */
+.nav__links a{position:relative}
+.nav__links a::after{content:"";position:absolute;left:0;right:100%;bottom:2px;
+  height:1.5px;background:var(--accent);transition:right .35s var(--ease)}
+.nav__links a.is-hier{color:var(--ink)}
+.nav__links a.is-hier::after{right:0}
+@media (max-width:860px){.nav__links a::after{display:none}}
+
+/* ---------- ster (boodschap van Kaz voor de packages) ---------- */
+.ster{padding:clamp(56px,9vh,120px) 0;border-top:1px solid var(--line)}
+.ster__in{max-width:62ch;margin:0 auto;padding:0 var(--gut)}
+.ster__in h2{font-size:clamp(1.9rem,3.7vw,3rem)}
+.ster__spoiler{margin-top:10px;color:var(--muted);font-size:1.05rem}
+.ster__tekst{margin-top:26px;display:grid;gap:16px}
+.ster__tekst p{font-size:1.06rem}
+.ster__belofte{margin-top:26px;font-size:1.2rem;font-weight:600}
+.ster__in .btn{margin-top:30px}
+
+/* ---------- castingpagina ---------- */
+.casting{padding:clamp(60px,10vh,140px) 0}
+.casting__in{max-width:680px;margin:0 auto;padding:0 var(--gut)}
+.casting__in h1{font-size:clamp(1.9rem,4vw,3rem);margin-top:14px;max-width:20ch}
+.casting__intro{color:var(--muted);margin-top:18px;max-width:62ch;font-size:1.05rem}
+.casting__form{margin-top:40px}
+.casting__acts{margin-top:32px;display:flex;gap:12px;flex-wrap:wrap}
+
+/* ---------- castingformulier: fieldsets, selects, checkboxes ---------- */
+.form fieldset{border:1px solid var(--line);border-radius:14px;padding:20px;margin:0 0 22px;min-width:0}
+.form legend{padding:0 8px;font-weight:600;font-size:.95rem}
+.form__hint{color:var(--muted);font-size:.88rem;margin:-6px 0 16px}
+.field select{width:100%;background:#0D0D0D;border:1px solid var(--line-2);
+  border-radius:10px;color:var(--ink);font:inherit;font-size:16px;padding:13px 14px;min-height:44px}
+.field select:focus{border-color:var(--accent);outline:none}
+.field input:focus-visible,.field textarea:focus-visible,.field select:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.check{display:flex;align-items:flex-start;gap:10px;margin-bottom:16px;font-size:.92rem;color:var(--muted)}
+.check input{width:20px;height:20px;flex:none;margin-top:2px;accent-color:var(--accent)}
+.check a{color:var(--accent)}
+
+/* ---------- privacypagina (i.p.v. inline style="", geblokkeerd door de CSP) ---------- */
+.priv{padding-top:clamp(48px,9vh,110px)}
+.priv .cta__in{grid-template-columns:1fr;max-width:760px}
+.priv h1{font-size:clamp(1.9rem,4vw,3rem);max-width:22ch}
+.priv h2{font-size:1.25rem;margin-top:34px}
+.priv h2:first-of-type{margin-top:38px}
+.cta__txt .priv__terug,.priv__terug{margin-top:40px}
+
+/* ---------- videodiensten ---------- */
+.diensten{padding:clamp(60px,10vh,140px) 0;border-top:1px solid var(--line)}
+.diensten__grid{max-width:var(--max);margin:0 auto;padding:0 var(--gut);display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(28px,4vw,56px)}
+.diensten__grid h3{font-size:1.25rem}
+@media (max-width:900px){.diensten__grid{grid-template-columns:1fr}}
+
+/* ---------- websites ---------- */
+.webbouw{padding:clamp(48px,8vh,96px) 0;border-top:1px solid var(--line)}
+.webbouw__in{max-width:var(--max);margin:0 auto;padding:0 var(--gut)}
+.webbouw__in h2{font-size:clamp(1.9rem,3.7vw,3rem)}
+.webbouw__in p{max-width:62ch;margin-top:14px;font-size:1.05rem}
+.webbouw__in .btn{margin-top:26px}
+
+/* ---------- castingband ---------- */
+.castingband{padding:clamp(48px,8vh,96px) 0;border-top:1px solid var(--line);background:var(--bg-2)}
+.castingband__in{max-width:var(--max);margin:0 auto;padding:0 var(--gut)}
+.castingband__in h2{margin-top:14px;font-size:clamp(1.9rem,3.7vw,3rem)}
+.castingband__in p{max-width:62ch;margin-top:14px;font-size:1.05rem}
+.castingband__in .btn{margin-top:26px}
+
+/* ---------- reviews ---------- */
+.reviews{padding:clamp(60px,10vh,140px) 0;border-top:1px solid var(--line)}
+.review-grid{align-items:stretch}
+.review{background:var(--bg-2);border:1px solid var(--line-2);border-radius:var(--r);
+  padding:clamp(22px,2.2vw,30px);display:flex;flex-direction:column;gap:14px;margin:0;
+  transition:transform .35s var(--ease),box-shadow .35s var(--ease)}
+.review p{font-size:1.05rem;line-height:1.55}
+.review__sterren{color:var(--goud);font-size:1.05rem;letter-spacing:2px;margin:0}
+.review cite{font-style:normal;color:var(--muted);font-size:.92rem;margin-top:auto}
+.review.is-placeholder{border-style:dashed}
+.review__badge{align-self:flex-start;font-size:.78rem;font-weight:600;color:var(--accent);
+  background:var(--sand);border-radius:999px;padding:4px 12px}
+.reviews__cta{max-width:var(--max);margin:clamp(28px,3.4vw,44px) auto 0;padding:0 var(--gut);
+  color:var(--muted);font-size:.97rem;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+/* "Lees meer" per review (main.js zet .js-inkort; zonder JavaScript blijft
+   de volledige tekst staan). Kaarten lijnen boven uit in plaats van te
+   rekken, zodat een opengeklapte kaart de buren in de rij niet mee laat
+   groeien. Dat ingeklapte kaarten in een rij even hoog blijven, regelt
+   main.js met .review--rij (tekst minstens 4 regels) en .review--plek-knop
+   (ruimte van de knop vrijhouden bij een korte review zonder knop). */
+.review-grid.js-inkort{align-items:start}
+.js-inkort .review__tekst{display:-webkit-box;-webkit-box-orient:vertical;
+  -webkit-line-clamp:4;line-clamp:4;overflow:hidden}
+.js-inkort .review.is-open .review__tekst{display:block;-webkit-line-clamp:none;line-clamp:none;overflow:visible}
+.js-inkort .review--rij .review__tekst{min-height:6.2em}
+.js-inkort .review--plek-knop cite{margin-top:42px} /* knop 44px - 2x8px marge + 14px gap */
+.review__meer{align-self:flex-start;display:inline-flex;align-items:center;min-height:44px;margin:-8px 0;
+  padding:0;background:none;border:0;font:inherit;font-size:.92rem;font-weight:600;color:var(--accent);
+  text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:1px;cursor:pointer}
+.review__meer:hover{text-decoration-thickness:2px}
+
+/* ---------- sterrenwidget (reviewformulier) ---------- */
+.sterren{display:flex;flex-direction:row-reverse;justify-content:flex-end;gap:4px}
+.sterren input{position:absolute;opacity:0;width:1px;height:1px}
+.sterren label{cursor:pointer;font-size:1.9rem;line-height:1;color:var(--line-2)}
+.sterren label::before{content:"\2605"}
+.sterren label:hover,.sterren label:hover~label,
+.sterren input:checked~label,.sterren input:checked~label~label{color:var(--goud)}
+.sterren input:focus-visible+label{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px}
+
+/* ---------- bevestigings-popup reviewformulier ---------- */
+.revcheck{border:1px solid var(--line-2);border-radius:18px;padding:0;max-width:520px;
+  width:calc(100% - 40px);background:var(--bg)}
+.revcheck::backdrop{background:rgba(0,0,0,.72)}
+.revcheck form{padding:clamp(24px,3vw,34px)}
+.revcheck h2{font-size:1.5rem;margin-top:10px}
+.revcheck__sterren{color:var(--goud);font-size:1.3rem;letter-spacing:2px;margin-top:18px}
+.revcheck__naam{font-weight:600;margin-top:4px}
+.revcheck__tekst{margin:14px 0 0;padding-left:16px;border-left:2px solid var(--line-2);
+  color:var(--muted);font-style:italic}
+
+/* Openen/sluiten van de popup geanimeerd (alleen met .anim, dus niet bij
+   reduced-motion -- dan staat de popup er in één keer, zoals nu). De
+   sluit-animatie staat expres ná de open-animatie: bij gelijke stapeling
+   (beide gelden zolang [open] nog niet weg is) wint de latere regel. */
+.anim .revcheck{animation:revcheck-in .32s var(--ease) both}
+.anim .revcheck::backdrop{animation:revcheck-fade-in .3s var(--ease) both}
+.anim .revcheck.revcheck--sluit{animation:revcheck-uit .22s var(--ease) both}
+.anim .revcheck.revcheck--sluit::backdrop{animation:revcheck-fade-uit .2s var(--ease) both}
+@keyframes revcheck-in{from{opacity:0;transform:translateY(18px) scale(.96)}to{opacity:1;transform:none}}
+@keyframes revcheck-fade-in{from{opacity:0}to{opacity:1}}
+@keyframes revcheck-uit{from{opacity:1;transform:none}to{opacity:0;transform:translateY(12px) scale(.97)}}
+@keyframes revcheck-fade-uit{from{opacity:1}to{opacity:0}}
+
+/* Sterren in de popup één voor één: puur decoratief (staat al aria-hidden). */
+.anim .revcheck__ster{display:inline-block;opacity:0;transform:translateY(6px) scale(.7);
+  animation:revcheck-ster .3s var(--ease) both;animation-delay:calc(var(--i,0) * 70ms)}
+@keyframes revcheck-ster{to{opacity:1;transform:none}}

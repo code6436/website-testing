@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta name="robots" content="noindex,nofollow">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<title>Laat een review achter | VOX Media House</title>
+<meta name="description" content="Werkte je met VOX Media House? Laat een review achter. We nemen 'm door voor die op de site verschijnt.">
+<meta name="theme-color" content="#000000">
+<meta name="robots" content="noindex">
+<link rel="canonical" href="https://voxmediahouse.nl/review-insturen.html">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<link rel="preload" href="assets/fonts/instrument-sans-2.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="styles.css">
+<script>(function(){var r=window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches;document.documentElement.className+=r?" js":" js anim";})();</script>
+</head>
+<body>
+<a class="skip" href="#hoofd">Naar de inhoud</a>
+<header class="nav" id="nav">
+  <div class="nav__in">
+    <a class="nav__logo" href="index.html" aria-label="VOX Media House, naar de homepage">
+      <svg viewBox="0 0 64 64" width="30" height="30" aria-hidden="true" focusable="false">
+        <circle cx="32" cy="32" r="23" fill="none" stroke="currentColor" stroke-width="5"/>
+        <path d="M22 21 L32 43 L42 21" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="square"/>
+        <path d="M12.1 20.5 A23 23 0 0 0 12.1 43.5" fill="none" stroke="#B9944A" stroke-width="5" stroke-linecap="round"/>
+      </svg>
+      <span class="nav__name"><b>VOX</b><i>MEDIA HOUSE</i></span>
+    </a>
+    <button class="nav__toggle" type="button" id="navknop" aria-expanded="false" aria-controls="navmenu" aria-label="Menu openen">
+      <span></span><span></span>
+    </button>
+    <div class="nav__panel" id="navmenu">
+      <nav class="nav__links" aria-label="Hoofdmenu">
+        <a href="index.html#pijlers">Wat we doen</a>
+        <a href="index.html#events">Events</a>
+        <a href="index.html#werk">Werk</a>
+        <a href="index.html#packages">Packages</a>
+        <a href="casting.html">Casting</a>
+      </nav>
+      <a class="btn btn--primary btn--sm nav__cta" href="index.html#contact">Strategiesessie</a>
+    </div>
+  </div>
+</header>
+<div class="voortgang" aria-hidden="true"></div>
+<main id="hoofd">
+<section class="casting">
+  <div class="casting__in">
+    <p class="badge">Review</p>
+    <h1>Laat een review achter</h1>
+    <p class="casting__intro">Werkte je met VOX Media House? Fijn dat je een review wilt achterlaten. We nemen 'm door voordat die op de site verschijnt, dus je ziet 'm niet meteen live staan.</p>
+    <h2 class="sr-only">Reviewformulier</h2>
+
+    <form class="form casting__form" name="review" method="POST" action="/review-bedankt.html" data-netlify="true" data-netlify-honeypot="bot-field" id="reviewform">
+      <input type="hidden" name="form-name" value="review">
+      <p class="form__val" aria-hidden="true"><label>Niet invullen: <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
+
+      <fieldset>
+        <legend>Jouw beoordeling</legend>
+        <div class="field">
+          <div class="sterren" role="radiogroup" aria-label="Beoordeling in sterren, 1 tot 5">
+            <input type="radio" id="r-s5" name="sterren" value="5" required>
+            <label for="r-s5"><span class="sr-only">5 sterren</span></label>
+            <input type="radio" id="r-s4" name="sterren" value="4">
+            <label for="r-s4"><span class="sr-only">4 sterren</span></label>
+            <input type="radio" id="r-s3" name="sterren" value="3">
+            <label for="r-s3"><span class="sr-only">3 sterren</span></label>
+            <input type="radio" id="r-s2" name="sterren" value="2">
+            <label for="r-s2"><span class="sr-only">2 sterren</span></label>
+            <input type="radio" id="r-s1" name="sterren" value="1">
+            <label for="r-s1"><span class="sr-only">1 ster</span></label>
+          </div>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Jouw review</legend>
+        <div class="field">
+          <label for="r-naam">Jouw naam</label>
+          <input id="r-naam" name="naam" type="text" autocomplete="name" required>
+        </div>
+        <div class="field">
+          <label for="r-bedrijf">Bedrijf</label>
+          <input id="r-bedrijf" name="bedrijf" type="text" autocomplete="organization" required>
+        </div>
+        <div class="field">
+          <label for="r-tekst">Jouw review</label>
+          <textarea id="r-tekst" name="review_tekst" rows="4" maxlength="500" required></textarea>
+        </div>
+        <div class="field">
+          <label for="r-email">E-mailadres (optioneel, voor eventuele vragen)</label>
+          <input id="r-email" name="email" type="email" autocomplete="email">
+        </div>
+      </fieldset>
+
+      <label class="check">
+        <input type="checkbox" name="toestemming_publicatie" value="ja" required>
+        <span>Ik geef VOX Media House toestemming om deze review, met mijn naam, na goedkeuring op de website te tonen. Lees meer in de <a href="privacy.html#reviews">privacyverklaring</a>.</span>
+      </label>
+
+      <button class="btn btn--primary btn--full" type="submit">Review controleren en versturen</button>
+      <p class="form__note" id="reviewnote" role="status"></p>
+    </form>
+
+    <dialog class="revcheck" id="revcheck">
+      <form method="dialog">
+        <p class="badge">Even controleren</p>
+        <h2>Klopt dit zo?</h2>
+        <p class="revcheck__sterren" id="revcheck-sterren" aria-hidden="true"></p>
+        <p class="revcheck__naam" id="revcheck-naam"></p>
+        <blockquote class="revcheck__tekst" id="revcheck-tekst"></blockquote>
+        <p class="casting__intro">Na versturen bekijken we je review, daarna zetten we 'm pas op de site.</p>
+        <div class="casting__acts">
+          <button class="btn btn--ghost" type="button" id="revcheck-terug">Terug aanpassen</button>
+          <button class="btn btn--primary" type="button" id="revcheck-bevestig">Bevestigen en versturen</button>
+        </div>
+      </form>
+    </dialog>
+  </div>
+</section>
+</main>
+
+<footer class="foot">
+  <div class="foot__in">
+    <p class="foot__merk">VOX Media House</p>
+    <div class="foot__cols">
+      <div>
+        <h3>Contact</h3>
+        <p><a href="mailto:info@voxmediahouse.nl">info@voxmediahouse.nl</a><br><a href="tel:+31619020080">06 19 02 00 80</a><br><a href="https://www.instagram.com/voxmediahouse.nl/" rel="me noopener" target="_blank">@voxmediahouse.nl</a></p>
+      </div>
+      <div>
+        <h3>Bedrijfsgegevens</h3>
+        <p>VOX Media House<br>
+        Mijndenhof 52, 1106 GN Amsterdam<br>
+        KvK 58717269 &middot; Btw NL002226678B74</p>
+      </div>
+      <div>
+        <h3>Diensten</h3>
+        <p>The Campaign Room<br>The Social Suite<br>Events &amp; Aftermovies<br>Bedrijfsvideo's<br>Product Studio</p>
+      </div>
+    </div>
+    <p class="foot__rule">&copy; <span id="jaar">2026</span> VOX Media House &middot; <a href="privacy.html">Privacy en cookies</a></p>
+  </div>
+</footer>
+<script src="assets/vendor/gsap.min.js" defer></script>
+<script src="assets/vendor/ScrollTrigger.min.js" defer></script>
+<script src="assets/vendor/lenis.min.js" defer></script>
+<script src="main.js" defer></script>
+</body>
+</html>
