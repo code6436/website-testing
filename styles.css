@@ -61,24 +61,16 @@ ul,ol{margin:0;padding:0;list-style:none}
 
 :focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:4px}
 
-.tbd{
-  display:inline-block;font-size:.78em;font-weight:600;letter-spacing:.04em;
-  color:var(--accent);border:1px dashed rgba(185,148,74,.55);
-  padding:1px 8px;border-radius:999px;
-}
-
 /* ---------- knoppen ---------- */
 .btn{
   display:inline-flex;align-items:center;justify-content:center;gap:10px;
-  padding:15px 26px;border-radius:999px;border:1px solid transparent;
+  padding:15px 26px;border-radius:6px;border:1px solid transparent;
   background-clip:padding-box;-webkit-background-clip:padding-box;
   font-size:15px;font-weight:600;letter-spacing:-.01em;text-decoration:none;
-  cursor:pointer;transition:transform .35s var(--ease),background-color .25s,border-color .25s,color .25s;
+  cursor:pointer;transition:background-color .25s,border-color .25s,color .25s;
 }
-.btn--primary{background-color:var(--knop);color:#000000;
-  background-image:linear-gradient(100deg,#FA8A00 0%,#FFB347 50%,#FA8A00 100%);background-size:220% 100%;background-position:0 0;
-  transition:transform .35s var(--ease),background-position .6s var(--ease),box-shadow .35s var(--ease),border-color .25s,color .25s}
-.btn--primary:hover{background-position:100% 0}
+.btn--primary{background-color:var(--knop);color:#000000}
+.btn--primary:hover{background-color:#FFB347}
 .btn--ghost{background-color:transparent;color:var(--ink);border-color:var(--line-2)}
 .btn--ghost:hover{border-color:var(--ink)}
 .btn--sm{padding:11px 20px;font-size:14px}
@@ -130,8 +122,6 @@ ul,ol{margin:0;padding:0;list-style:none}
 /* De sluier staat BUITEN de bewegende laag; anders drijft hij onder de tekst weg.
    Donker, maar licht genoeg dat de video goed zichtbaar blijft. */
 .hero__scrim{position:absolute;inset:0;z-index:1;pointer-events:none;background:
-  radial-gradient(48% 52% at 92% 18%,rgba(125,4,230,.50),rgba(125,4,230,0) 72%),
-  radial-gradient(40% 46% at 96% 100%,rgba(250,138,0,.42),rgba(250,138,0,0) 72%),
   linear-gradient(180deg,rgba(0,0,0,.84) 0%,rgba(0,0,0,.42) 14%,
   rgba(0,0,0,.18) 34%,rgba(0,0,0,.36) 60%,rgba(0,0,0,.78) 100%)}
 .hero__in{position:relative;z-index:2;max-width:var(--max);margin:0 auto;width:100%;
@@ -401,7 +391,6 @@ section[id]{scroll-margin-top:82px}
   .btn:hover .btn__pijl{transform:translateX(4px)}
 
   /* Een reviewkaart komt licht omhoog, zoals a.card:hover. */
-  .review:hover{transform:translateY(-4px);box-shadow:0 16px 28px -18px rgba(0,0,0,.9)}
 }
 
 /* De voortgangslijn bovenaan: dun, in de accentkleur, en alleen zichtbaar
@@ -482,7 +471,7 @@ section[id]{scroll-margin-top:82px}
 .review-grid{align-items:stretch}
 .review{background:var(--bg-2);border:1px solid var(--line-2);border-radius:var(--r);
   padding:clamp(22px,2.2vw,30px);display:flex;flex-direction:column;gap:14px;margin:0;
-  transition:transform .35s var(--ease),box-shadow .35s var(--ease)}
+}
 .review p{font-size:1.05rem;line-height:1.55}
 .review__sterren{color:var(--goud);font-size:1.05rem;letter-spacing:2px;margin:0}
 .review cite{font-style:normal;color:var(--muted);font-size:.92rem;margin-top:auto}
@@ -552,10 +541,10 @@ section[id]{scroll-margin-top:82px}
    Zwart #000 / #191919 als basis, oranje #FA8A00 en paars #7D04E6 als hele
    vlakken. Geen rood. Geen wit op oranje (zwart wel). Paars alleen als vlak
    met witte tekst, of (licht) in grote koppen. Teksten staan altijd op een
-   effen vlak, nooit op het verloop zelf (contrast).
+   effen vlak (contrast).
    ===================================================================== */
 ::selection{background:#FA8A00;color:#000000}
-.voortgang{background:linear-gradient(90deg,#FA8A00,#B266FF)}
+.voortgang{background:#FA8A00}
 
 /* kleurvlakken: variabelen lokaal omzetten, dan volgt alle tekst vanzelf */
 .merken,.diensten,.webbouw{--ink:#000000;--muted:#000000;--accent:#000000;
@@ -577,26 +566,14 @@ section[id]{scroll-margin-top:82px}
   color:var(--ink);border-color:var(--ink)}
 .eyebrow{color:var(--accent)}
 
-/* grote koppen op zwart: bewegend verloop oranje naar licht paars (grote tekst, >= 3:1) */
-.work .sec__head h2,.reviews .sec__head h2,.packages .sec__head h2,.ster__in h2,.pillars .sec__head h2{
-  color:#FA8A00;background:linear-gradient(95deg,#FA8A00 0%,#FFB347 30%,#B266FF 65%,#FA8A00 100%);
-  background-size:250% 100%;-webkit-background-clip:text;background-clip:text;
-  -webkit-text-fill-color:transparent;padding-bottom:.08em}
+/* grote koppen op zwart: effen oranje (8:1 op zwart) */
+.work .sec__head h2,.reviews .sec__head h2,.packages .sec__head h2,.ster__in h2,.pillars .sec__head h2{color:#FA8A00}
 
-/* gloed achter zwarte secties; main.js schuift hem mee met de scroll (--gy) */
-.packages,.ster,.reviews{overflow:hidden;isolation:isolate}
-.packages::before,.ster::before,.reviews::before{content:"";position:absolute;z-index:-1;
-  inset:-25% -15%;pointer-events:none;
-  background:radial-gradient(38% 38% at 14% 30%,rgba(250,138,0,.30),rgba(250,138,0,0) 70%),
-             radial-gradient(44% 44% at 86% 72%,rgba(125,4,230,.46),rgba(125,4,230,0) 70%);
-  transform:translate3d(0,var(--gy,0%),0)}
 .packages{background:#191919}
-.pack{transition:transform .4s var(--ease),box-shadow .4s var(--ease),border-color .4s var(--ease)}
-.pack--lift{border-color:#FA8A00;box-shadow:0 0 0 1px #FA8A00,0 24px 60px -24px rgba(250,138,0,.55)}
+.pack--lift{border-color:#FA8A00;box-shadow:0 0 0 1px #FA8A00}
 
-/* beelden in kleurvlak-kaders, zoals de blokken van decodudes */
-.pillar__img{border:0;box-shadow:14px 14px 0 #7D04E6;transition:box-shadow .45s var(--ease),transform .45s var(--ease)}
-.pillar--flip .pillar__img{box-shadow:14px 14px 0 #FA8A00}
+/* beelden zonder kader of schaduw */
+.pillar__img{border:0}
 .card__cat{color:#FA8A00}
 .card__kader{border-color:var(--line-2)}
 .review{border-color:var(--line-2)}
@@ -604,47 +581,21 @@ section[id]{scroll-margin-top:82px}
 .reviews .review:nth-child(3n+2){border-top:3px solid #7D04E6}
 .reviews .review:nth-child(3n+3){border-top:3px solid #B266FF}
 
-/* footer en menu: dunne verloopstreep */
+/* footer, menu en hero: dunne effen streep */
 .foot{border-top:0}
-.foot::before{content:"";position:absolute;left:0;right:0;top:0;height:4px;z-index:1;
-  background:linear-gradient(90deg,#FA8A00,#7D04E6,#FA8A00);background-size:200% 100%}
-.nav--solid::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px;
-  background:linear-gradient(90deg,#FA8A00,#7D04E6,#FA8A00);background-size:200% 100%}
-.hero::after{content:"";position:absolute;left:0;right:0;bottom:0;height:6px;z-index:3;
-  background:linear-gradient(90deg,#FA8A00,#7D04E6,#FA8A00);background-size:200% 100%}
+.foot::before{content:"";position:absolute;left:0;right:0;top:0;height:4px;z-index:1;background:#FA8A00}
+.nav--solid::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px;background:#FA8A00}
+.hero::after{content:"";position:absolute;left:0;right:0;bottom:0;height:6px;z-index:3;background:#FA8A00}
 .nav__links a::after{background:#FA8A00}
 .nav__links a:hover{color:#FA8A00}
 .nav__cta{box-shadow:none}
 
-@keyframes verloop{to{background-position:-200% 0}}
-@keyframes gloed{0%,100%{opacity:.85}50%{opacity:1}}
-@keyframes tint{0%,100%{transform:translate3d(0,0,0) scale(1)}50%{transform:translate3d(-3%,2%,0) scale(1.08)}}
-.anim .work .sec__head h2,.anim .reviews .sec__head h2,.anim .packages .sec__head h2,
-.anim .ster__in h2,.anim .pillars .sec__head h2{animation:verloop 9s linear infinite}
-.anim .foot::before,.anim .nav--solid::after,.anim .hero::after{animation:verloop 6s linear infinite}
-.anim .hero__scrim{animation:tint 14s ease-in-out infinite}
-.anim .packages::before,.anim .ster::before,.anim .reviews::before{animation:gloed 8s ease-in-out infinite}
-
+/* hover = kleurwissel; op een kleurvlak wisselt de zwarte knop naar de andere kleur */
+.merken .btn--primary:hover,.diensten .btn--primary:hover,.webbouw .btn--primary:hover{background-color:#7D04E6;color:#FFFFFF}
+.pillar--flip .btn--primary:hover,.castingband .btn--primary:hover,.cta__txt .btn--primary:hover{background-color:#FA8A00;color:#000000}
 @media (hover:hover) and (pointer:fine){
-  .btn:hover{transform:translateY(-3px)}
-  .btn--primary:hover{box-shadow:0 12px 30px -10px rgba(250,138,0,.75)}
-  .merken .btn--primary:hover,.diensten .btn--primary:hover,.webbouw .btn--primary:hover{box-shadow:5px 5px 0 #7D04E6}
-  .pillar--flip .btn--primary:hover,.castingband .btn--primary:hover,.cta__txt .btn--primary:hover{box-shadow:5px 5px 0 #FA8A00}
-  .pillar:hover .pillar__img{box-shadow:6px 6px 0 #7D04E6;transform:translate(4px,4px)}
-  .pillar--flip:hover .pillar__img{box-shadow:6px 6px 0 #FA8A00}
-  a.card:hover .card__kader{border-color:#FA8A00;box-shadow:0 0 0 2px #FA8A00,10px 10px 0 #7D04E6}
+  a.card:hover .card__kader{border-color:#FA8A00;box-shadow:0 0 0 2px #FA8A00}
   .card__kader{transition:border-color .35s var(--ease),box-shadow .35s var(--ease)}
-  .pack:hover{transform:translateY(-6px)}
-  .review:hover{box-shadow:0 18px 34px -18px rgba(250,138,0,.55)}
-  .diensten__grid>div{transition:transform .4s var(--ease)}
-  .diensten__grid>div:hover{transform:translateY(-4px)}
-}
-@media (max-width:600px){
-  .pillar__img,.pillar--flip .pillar__img{box-shadow:10px 10px 0 #7D04E6}
-  .pillar--flip .pillar__img{box-shadow:10px 10px 0 #FA8A00}
-}
-@media (prefers-reduced-motion:reduce){
-  .hero__scrim,.foot::before,.nav--solid::after,.hero::after{animation:none!important}
 }
 
 /* Klantlogo's die van zichzelf licht zijn verdwijnen op de oranje balk

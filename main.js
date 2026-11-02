@@ -251,34 +251,27 @@ var INFO_MAIL = "info@voxmediahouse.nl";
   }
 
   /* ---------- reveals ----------
-     Alles komt binnen bij naar beneden scrollen en gaat terug bij omhoog
-     scrollen, zodat de pagina in beide richtingen leeft. Kaarten die naast
-     elkaar staan komen kort na elkaar binnen; dat leest als een beweging in
-     plaats van drie losse sprongen. De eindwaarden zijn exact 1 en 0, nooit
-     iets ertussenin: een blijvende gebroken opacity maakt een compositielaag
-     en die gaf eerder de gloed rond de knoppen. */
-  gsap.utils.toArray(".grid, .packs").forEach(function (groep) {
+     Alleen de pakketkaarten en twee beelden komen één keer binnen; terug
+     omhoog scrollen draait niets om. Eindwaarden exact 1 en 0. */
+  gsap.utils.toArray(".packs").forEach(function (groep) {
     var leden = gsap.utils.toArray(".reveal", groep);
     if (!leden.length) { return; }
     ScrollTrigger.batch(leden, {
       start: "top 90%",
+      once: true,
       onEnter: function (groepje) {
         gsap.to(groepje, { opacity: 1, y: 0, scale: 1, duration: .75, ease: "power3.out",
           stagger: .08, overwrite: true });
-      },
-      onLeaveBack: function (groepje) {
-        gsap.to(groepje, { opacity: 0, y: 26, scale: .985, duration: .45, ease: "power2.in",
-          stagger: { each: .05, from: "end" }, overwrite: true });
       }
     });
   });
 
   /* De overige blokken, een voor een. */
   gsap.utils.toArray(".reveal").forEach(function (el) {
-    if (el.closest(".grid") || el.closest(".packs")) { return; }
+    if (el.closest(".packs")) { return; }
     gsap.to(el, {
       opacity: 1, y: 0, scale: 1, duration: .8, ease: "power3.out",
-      scrollTrigger: { trigger: el, start: "top 88%", toggleActions: "play none none reverse" },
+      scrollTrigger: { trigger: el, start: "top 88%", toggleActions: "play none none none", once: true },
       onComplete: function () { gsap.set(el, { willChange: "auto" }); }
     });
   });
@@ -289,15 +282,6 @@ var INFO_MAIL = "info@voxmediahouse.nl";
     gsap.fromTo(im, { yPercent: -5, scale: 1.11 }, {
       yPercent: 5, scale: 1.11, ease: "none",
       scrollTrigger: { trigger: im.parentNode, start: "top bottom", end: "bottom top", scrub: .8 }
-    });
-  });
-
-  /* Kleurgloed achter de zwarte secties schuift mee met de scroll (CSS-variabele
-     --gy, gelezen door ::before in styles.css). */
-  gsap.utils.toArray(".packages, .ster, .reviews").forEach(function (sec) {
-    gsap.fromTo(sec, { "--gy": "-14%" }, {
-      "--gy": "14%", ease: "none",
-      scrollTrigger: { trigger: sec, start: "top bottom", end: "bottom top", scrub: .8 }
     });
   });
 
