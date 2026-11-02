@@ -1,12 +1,9 @@
-/* Instrument Sans, SIL Open Font License 1.1. Zelf gehost: zo gaat er geen
+/* Archivo (Omnibus-Type), SIL Open Font License 1.1. Zelf gehost: zo gaat er geen
    bezoekersgegeven naar Google en is er geen toestemming nodig. Een variabel
-   bestand per subset dekt alle gewichten van 400 tot 700. */
-@font-face{font-family:'Instrument Sans';font-style:normal;font-weight:400 700;
-  font-stretch:100%;font-display:swap;src:url(assets/fonts/instrument-sans-2.woff2) format('woff2');
+   bestand (alleen latin, 35 KB) dekt alle gewichten: 800 voor koppen, 400 voor tekst. */
+@font-face{font-family:'Archivo';font-style:normal;font-weight:100 900;font-stretch:100%;
+  font-display:swap;src:url(assets/fonts/archivo-latin-wght-normal.woff2) format('woff2');
   unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
-@font-face{font-family:'Instrument Sans';font-style:normal;font-weight:400 700;
-  font-stretch:100%;font-display:swap;src:url(assets/fonts/instrument-sans-1.woff2) format('woff2');
-  unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
 
 /* VOX Media House — 2026-09-21 */
 
@@ -28,11 +25,12 @@
   --paars-licht:#B266FF;
   --accent-ink:#000000;
   --fout:#FFB066;
+  --roze:#FF7AB8;
   --gut:clamp(20px,5vw,72px);
   --max:1240px;
   --r:14px;
   --ease:cubic-bezier(.22,.61,.36,1);
-  --font:"Instrument Sans",ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  --font:"Archivo",ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
 }
 
 *,*::before,*::after{box-sizing:border-box}
@@ -45,13 +43,13 @@ html{-webkit-text-size-adjust:100%;overflow-x:hidden}
 html,body{margin:0;padding:0}
 body{
   background:var(--bg);color:var(--ink);font-family:var(--font);
-  font-size:17px;line-height:1.6;font-weight:400;
+  font-size:17px;line-height:1.6;font-weight:400;word-spacing:.06em;
   -webkit-font-smoothing:antialiased;overflow-x:hidden;
 }
 img,svg,video{display:block;max-width:100%}
 img{height:auto}
 a{color:inherit}
-h1,h2,h3{margin:0;font-weight:600;letter-spacing:-.025em;line-height:1.08}
+h1,h2,h3{margin:0;font-weight:800;letter-spacing:-.025em;word-spacing:.1em;line-height:1.06}
 p{margin:0}
 ul,ol{margin:0;padding:0;list-style:none}
 
@@ -66,11 +64,10 @@ ul,ol{margin:0;padding:0;list-style:none}
   display:inline-flex;align-items:center;justify-content:center;gap:10px;
   padding:15px 26px;border-radius:6px;border:1px solid transparent;
   background-clip:padding-box;-webkit-background-clip:padding-box;
-  font-size:15px;font-weight:600;letter-spacing:-.01em;text-decoration:none;
+  font-size:15px;font-weight:700;letter-spacing:-.005em;text-decoration:none;
   cursor:pointer;transition:background-color .25s,border-color .25s,color .25s;
 }
 .btn--primary{background-color:var(--knop);color:#000000}
-.btn--primary:hover{background-color:#FFB347}
 .btn--ghost{background-color:transparent;color:var(--ink);border-color:var(--line-2)}
 .btn--ghost:hover{border-color:var(--ink)}
 .btn--sm{padding:11px 20px;font-size:14px}
@@ -83,7 +80,7 @@ ul,ol{margin:0;padding:0;list-style:none}
 .nav__in{max-width:var(--max);margin:0 auto;padding:14px var(--gut);display:flex;align-items:center;gap:26px}
 .nav__logo{display:flex;align-items:center;gap:11px;text-decoration:none;color:var(--ink);flex:none;padding:6px 0}
 .nav__name{display:flex;flex-direction:column;line-height:1}
-.nav__name b{font-size:19px;font-weight:700;letter-spacing:.06em}
+.nav__name b{font-size:19px;font-weight:800;letter-spacing:.06em}
 .nav__name i{font-style:normal;font-size:9px;font-weight:500;letter-spacing:.155em;color:var(--muted);margin-top:4px}
 .nav__panel{display:flex;align-items:center;gap:26px;margin-left:auto}
 .nav__links{display:flex;gap:28px}
@@ -133,7 +130,7 @@ ul,ol{margin:0;padding:0;list-style:none}
 /* Smal scherm: tekst loopt tot de rand, dus de vervaging valt buiten beeld (hero knipt af). */
 @media (max-width:600px){.hero__in::before{right:-25%}}
 .hero__mark{color:var(--ink);width:clamp(44px,5vw,56px);height:auto;margin-bottom:26px}
-.hero__title{font-size:clamp(2.35rem,6.4vw,5rem);max-width:17ch;letter-spacing:-.035em}
+.hero__title{font-size:clamp(2.35rem,6.4vw,5rem);max-width:17ch;letter-spacing:-.03em;line-height:1.02}
 .hero__sub{margin-top:20px;font-size:clamp(1rem,1.5vw,1.2rem);color:var(--ink);max-width:46ch}
 .hero__acts{margin-top:36px;display:flex;gap:12px;flex-wrap:wrap}
 .hero__hint{position:absolute;left:50%;bottom:22px;z-index:2;width:1px;height:46px;
@@ -153,6 +150,8 @@ section{position:relative}
 .pillar{max-width:var(--max);margin:0 auto;padding:clamp(64px,12vh,150px) var(--gut);
   display:grid;grid-template-columns:1fr 1fr;gap:clamp(30px,6vw,90px);align-items:center}
 .pillar+.pillar{border-top:1px solid var(--line)}
+/* Eerste pijler: de oranje klantbalk erboven laat al ruimte; geen zwart gat. */
+.pillars>.pillar:first-of-type{padding-top:clamp(36px,6vh,72px)}
 .pillar--flip .pillar__txt{order:2}
 .pillar__txt h3{font-size:clamp(1.75rem,3.4vw,2.9rem)}
 .pillar__txt p{color:var(--muted);margin-top:18px;max-width:42ch;font-size:1.06rem}
@@ -204,7 +203,7 @@ section{position:relative}
    loopt de tekst met white-space:nowrap over de buren heen. */
 .merken__spoor li{white-space:nowrap;font-size:clamp(.95rem,1.5vw,1.15rem);font-weight:600;
   letter-spacing:-.01em;color:#000000}
-.merken__spoor li:has(img){width:156px;flex:none;display:flex;align-items:center;justify-content:center;text-align:center}
+.merken__spoor li:has(img){width:156px;height:34px;flex:none;display:flex;align-items:center;justify-content:center;text-align:center}
 .merken__spoor img{box-sizing:content-box;max-height:34px;max-width:120px;width:auto;height:auto;object-fit:contain;}
 /* De band loopt met GSAP zodra dat geladen is; dan zet main.js de class
    merken--js en verdwijnen deze keyframes. Laadt GSAP niet, dan blijft de
@@ -242,8 +241,6 @@ section{position:relative}
 .card__cat{margin-top:14px;font-size:.8rem;font-weight:600;color:var(--accent)}
 .card h3{font-size:1.05rem;margin-top:4px}
 .card p{color:var(--muted);font-size:.94rem;margin-top:5px}
-a.card:hover{transform:translateY(-4px)}
-a.card:hover img{filter:brightness(1.04)}
 .pillar__img img{will-change:transform}
 .card.is-placeholder h3{color:#8F9796}
 
@@ -318,7 +315,7 @@ a.card:hover img{filter:brightness(1.04)}
 /* Zonder eigen kleur vielen deze links terug op de standaard blauwe
    browserlink -- de enige plek op de site waar dat nog gebeurde. */
 .foot__cols a{text-decoration:none;color:var(--ink);display:inline-flex;align-items:center;min-height:44px}
-.foot__cols a:hover{color:var(--accent)}
+.foot__cols a:hover,.foot__rule a:hover{color:var(--roze)}
 .foot__rule{margin-top:40px;padding-top:20px;border-top:1px solid var(--line);color:var(--muted);font-size:13px}
 
 /* ---------- reveal ---------- */
@@ -379,18 +376,10 @@ section[id]{scroll-margin-top:82px}
   .merken__rij:hover .merken__spoor img{opacity:.5}
   .merken__rij:hover .merken__spoor li:hover img{opacity:1}
 
-  /* De foto in een werkkaart komt een fractie naar je toe. */
-  .card__kader{transition:border-color .35s var(--ease)}
-  a.card:hover .card__kader{border-color:var(--line-2)}
-  a.card:hover img{filter:brightness(1.05) saturate(1.04)}
-
-  .btn--ghost:hover{color:var(--accent);border-color:var(--accent)}
-
   /* Een knop met een pijl laat die pijl meelopen. */
   .btn__pijl{display:inline-block;margin-left:9px;transition:transform .3s var(--ease)}
   .btn:hover .btn__pijl{transform:translateX(4px)}
 
-  /* Een reviewkaart komt licht omhoog, zoals a.card:hover. */
 }
 
 /* De voortgangslijn bovenaan: dun, in de accentkleur, en alleen zichtbaar
@@ -402,10 +391,12 @@ section[id]{scroll-margin-top:82px}
 
 /* De sectie waar je nu bent, licht op in het menu. */
 .nav__links a{position:relative}
-.nav__links a::after{content:"";position:absolute;left:0;right:100%;bottom:2px;
-  height:1.5px;background:var(--accent);transition:right .35s var(--ease)}
+.nav__links a::after{content:"";position:absolute;left:0;right:0;bottom:2px;
+  height:2px;background:var(--roze);transform:scaleX(0);transform-origin:right;
+  transition:transform .45s var(--ease)}
 .nav__links a.is-hier{color:var(--ink)}
-.nav__links a.is-hier::after{right:0}
+.nav__links a.is-hier::after,.nav__links a:hover::after,.nav__links a:focus-visible::after{
+  transform:scaleX(1);transform-origin:left}
 @media (max-width:860px){.nav__links a::after{display:none}}
 
 /* ---------- ster (boodschap van Kaz voor de packages) ---------- */
@@ -500,7 +491,8 @@ section[id]{scroll-margin-top:82px}
 /* ---------- sterrenwidget (reviewformulier) ---------- */
 .sterren{display:flex;flex-direction:row-reverse;justify-content:flex-end;gap:4px}
 .sterren input{position:absolute;opacity:0;width:1px;height:1px}
-.sterren label{cursor:pointer;font-size:1.9rem;line-height:1;color:var(--line-2)}
+.sterren label{cursor:pointer;font-size:1.9rem;line-height:1;color:var(--line-2);
+  display:flex;align-items:center;justify-content:center;min-width:44px;min-height:44px}
 .sterren label::before{content:"\2605"}
 .sterren label:hover,.sterren label:hover~label,
 .sterren input:checked~label,.sterren input:checked~label~label{color:var(--goud)}
@@ -544,7 +536,7 @@ section[id]{scroll-margin-top:82px}
    effen vlak (contrast).
    ===================================================================== */
 ::selection{background:#FA8A00;color:#000000}
-.voortgang{background:#FA8A00}
+.voortgang{background:var(--roze)}
 
 /* kleurvlakken: variabelen lokaal omzetten, dan volgt alle tekst vanzelf */
 .merken,.diensten,.webbouw{--ink:#000000;--muted:#000000;--accent:#000000;
@@ -586,17 +578,9 @@ section[id]{scroll-margin-top:82px}
 .foot::before{content:"";position:absolute;left:0;right:0;top:0;height:4px;z-index:1;background:#FA8A00}
 .nav--solid::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px;background:#FA8A00}
 .hero::after{content:"";position:absolute;left:0;right:0;bottom:0;height:6px;z-index:3;background:#FA8A00}
-.nav__links a::after{background:#FA8A00}
-.nav__links a:hover{color:#FA8A00}
 .nav__cta{box-shadow:none}
 
 /* hover = kleurwissel; op een kleurvlak wisselt de zwarte knop naar de andere kleur */
-.merken .btn--primary:hover,.diensten .btn--primary:hover,.webbouw .btn--primary:hover{background-color:#7D04E6;color:#FFFFFF}
-.pillar--flip .btn--primary:hover,.castingband .btn--primary:hover,.cta__txt .btn--primary:hover{background-color:#FA8A00;color:#000000}
-@media (hover:hover) and (pointer:fine){
-  a.card:hover .card__kader{border-color:#FA8A00;box-shadow:0 0 0 2px #FA8A00}
-  .card__kader{transition:border-color .35s var(--ease),box-shadow .35s var(--ease)}
-}
 
 /* Klantlogo's die van zichzelf licht zijn verdwijnen op de oranje balk
    (gemeten < 3:1). Die zeven worden zwarte silhouetten (8,7:1). Logo's met
@@ -613,3 +597,73 @@ section[id]{scroll-margin-top:82px}
 /* Anker naar het pakket Events & Aftermovies: de vaste menubalk mag de kop niet bedekken. */
 .pack{scroll-margin-top:110px}
 @media (max-width:600px){.hero__acts .btn{text-align:center;line-height:1.25}}
+
+
+/* =====================================================================
+   ROZE, LOGO'S, BEWEGING (02-11-2026, versie 2)
+   Roze (--roze) is een subtiele vierde kleur op de zwarte delen: de
+   voortgangslijn bovenaan, de groeiende lijn onder een menulink en de
+   hover van de footerlinks. Geen vlakken, geen verloop.
+   ===================================================================== */
+
+/* Klantlogo's: eigen hoogte per merk voor gelijk optisch gewicht (vak 34px,
+   max. breedte 120px). Zonder regel hier: 34px, of smaller als de breedte
+   de grens raakt. */
+.merken__spoor li[data-merk="fiido"] img,
+.merken__spoor li[data-merk="mijn-huys"] img{max-height:22px}
+.merken__spoor li[data-merk="focuscare"] img{max-height:20px}
+.merken__spoor li[data-merk="icon-amsterdam"] img,
+.merken__spoor li[data-merk="de-maat-fabriek"] img,
+.merken__spoor li[data-merk="lumex"] img{max-height:30px}
+.merken__spoor li[data-merk="skil"] img{max-height:26px}
+.merken__spoor li[data-merk="uns"] img{max-height:25px}
+.merken__spoor li[data-merk="artin-athletics"] img,
+.merken__spoor li[data-merk="shakekings"] img{max-height:28px}
+.merken__spoor li[data-merk="mooiys"] img{max-height:31px}
+.merken__spoor li[data-merk="piet-de-wit-fietsspecialist"] img{max-height:27px}
+.merken__spoor li[data-merk="shermanology"] img{max-height:19px}
+.merken__spoor li[data-merk="undiemeister"] img{max-height:16px}
+.merken__spoor li[data-merk="myprotein"] img{max-height:33px}
+
+/* Knoppen: een effen kleurvlak schuift van onder omhoog bij hover/focus. */
+.btn{position:relative;isolation:isolate;overflow:hidden}
+.btn::before{content:"";position:absolute;inset:0;z-index:-1;background:var(--sweep,#7D04E6);
+  transform:translateY(101%);transition:transform .45s var(--ease)}
+.btn--primary{--sweep:#7D04E6;--hov:#FFFFFF}
+.btn--ghost{--sweep:#FA8A00;--hov:#000000}
+.btn--ghost:hover,.btn--ghost:focus-visible{border-color:#FA8A00}
+.merken .btn--ghost,.diensten .btn--ghost,.webbouw .btn--ghost{--sweep:#000000;--hov:#FA8A00}
+.merken .btn--ghost:hover,.diensten .btn--ghost:hover,.webbouw .btn--ghost:hover{border-color:#000000}
+.pillar--flip .btn--ghost,.castingband .btn--ghost,.cta__txt .btn--ghost{--sweep:#FFFFFF;--hov:#7D04E6}
+.pillar--flip .btn--ghost:hover,.castingband .btn--ghost:hover,.cta__txt .btn--ghost:hover{border-color:#FFFFFF}
+.pillar--flip .btn--primary,.castingband .btn--primary,.cta__txt .btn--primary{--sweep:#FA8A00;--hov:#000000}
+.btn:focus-visible::before{transform:none}
+.btn:focus-visible{color:var(--hov,#FFFFFF)}
+@media (hover:hover) and (pointer:fine){
+  .btn:hover::before{transform:none}
+  .btn:hover{color:var(--hov,#FFFFFF)}
+  .btn{transition:background-color .25s,border-color .25s,color .25s,translate .35s var(--ease)}
+}
+
+/* Menukop: compacter zodra je scrolt. */
+.nav__in{transition:padding .3s var(--ease)}
+.nav--solid .nav__in{padding-top:7px;padding-bottom:7px}
+.nav__logo svg{transform-origin:left center;transition:transform .3s var(--ease)}
+.nav--solid .nav__logo svg{transform:scale(.86)}
+
+/* Koppen woord voor woord omhoog (main.js zet de woorden in .kw). Een masker
+   per woord; de hero-kop heeft geen masker en blijft dus altijd leesbaar. */
+.anim .kw{display:inline-block;overflow:hidden;vertical-align:top;padding:0 .06em .14em;margin:0 -.06em -.14em}
+.anim .kw>span{display:inline-block;transform:translateY(118%);
+  transition:transform .9s var(--ease);transition-delay:calc(var(--i,0) * 70ms)}
+.anim [data-kop].is-in .kw>span{transform:none}
+.anim .hero__title .kw{overflow:visible;padding:0;margin:0}
+.anim .hero__title .kw>span{transform:none;transition:none;animation:kopop .9s var(--ease) both}
+.anim .hero__title .kw:nth-child(1)>span{animation-delay:60ms}
+.anim .hero__title .kw:nth-child(2)>span{animation-delay:130ms}
+.anim .hero__title .kw:nth-child(3)>span{animation-delay:200ms}
+.anim .hero__title .kw:nth-child(4)>span{animation-delay:270ms}
+.anim .hero__title .kw:nth-child(5)>span{animation-delay:340ms}
+.anim .hero__title .kw:nth-child(6)>span{animation-delay:410ms}
+.anim .hero__title .kw:nth-child(n+7)>span{animation-delay:480ms}
+@keyframes kopop{from{transform:translateY(.42em)}to{transform:none}}

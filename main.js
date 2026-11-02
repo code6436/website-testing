@@ -197,8 +197,69 @@ var INFO_MAIL = "info@voxmediahouse.nl";
     }
   }
 
-  /* ---------- zonder animatie: klaar ---------- */
+  /* ---------- koppen: woord voor woord omhoog ----------
+     Alleen met .anim (dus niet bij verminderde beweging). De woorden worden
+     hier in spans gezet; zonder JavaScript blijft de kop gewone tekst. Elke
+     kop schuift een keer in beeld zodra hij zichtbaar wordt. De hero-kop heeft
+     zijn woorden al in de HTML en loopt via CSS, direct bij het laden. */
+  if (animOn) {
+    var koppen = document.querySelectorAll(
+      ".sec__head h2, .ster__in h2, .castingband__in h2, .webbouw__in h2, .cta__txt h2, " +
+      ".pillar__txt h3:not([data-words]), main h1:not(.hero__title)");
+    var kopWoorden = function (el) {
+      var n = 0;
+      (function loop(node) {
+        Array.prototype.slice.call(node.childNodes).forEach(function (c) {
+          if (c.nodeType === 3) {
+            var frag = document.createDocumentFragment();
+            c.textContent.split(/(\s+)/).forEach(function (deel) {
+              if (!deel) { return; }
+              if (/^\s+$/.test(deel)) { frag.appendChild(document.createTextNode(" ")); return; }
+              var kw = document.createElement("span");
+              kw.className = "kw";
+              var bin = document.createElement("span");
+              bin.style.setProperty("--i", n++);
+              bin.textContent = deel;
+              kw.appendChild(bin);
+              frag.appendChild(kw);
+            });
+            node.replaceChild(frag, c);
+          } else if (c.nodeType === 1) { loop(c); }
+        });
+      })(el);
+      el.setAttribute("data-kop", "");
+    };
+    var kopObs = "IntersectionObserver" in window ? new IntersectionObserver(function (items) {
+      items.forEach(function (it) {
+        if (it.isIntersecting) { it.target.classList.add("is-in"); kopObs.unobserve(it.target); }
+      });
+    }, { threshold: 0.15, rootMargin: "0px 0px -6% 0px" }) : null;
+    Array.prototype.forEach.call(koppen, function (el) {
+      kopWoorden(el);
+      if (kopObs) { kopObs.observe(el); } else { el.classList.add("is-in"); }
+    });
+  }
+
+  /* ---------- magnetische knoppen ----------
+     Alleen met een muis (hover + fine pointer), en maar een paar pixels. */
+  if (animOn && window.matchMedia && window.matchMedia("(hover:hover) and (pointer:fine)").matches) {
+    Array.prototype.forEach.call(document.querySelectorAll(".btn"), function (knop) {
+      var tx = 0, ty = 0;
+      knop.addEventListener("mousemove", function (e) {
+        var r = knop.getBoundingClientRect();
+        tx = Math.max(-8, Math.min(8, (e.clientX - (r.left - tx + r.width / 2)) * 0.12));
+        ty = Math.max(-5, Math.min(5, (e.clientY - (r.top - ty + r.height / 2)) * 0.2));
+        knop.style.translate = tx.toFixed(1) + "px " + ty.toFixed(1) + "px";
+      });
+      knop.addEventListener("mouseleave", function () { tx = 0; ty = 0; knop.style.translate = "0 0"; });
+    });
+  }
+
+  /* ---------- zonder animatie (of zonder GSAP): klaar ----------
+     Ontbreekt GSAP of ScrollTrigger (blokkade, netwerkfout), dan gaat .anim
+     eraf: anders blijft alles wat op .reveal wacht onzichtbaar. */
   if (!animOn || !window.gsap || !window.ScrollTrigger) {
+    if (animOn) { html.classList.remove("anim"); }
     window.addEventListener("scroll", function () { navUpdate(window.scrollY || 0); }, { passive: true });
     return;
   }
@@ -356,8 +417,10 @@ var INFO_MAIL = "info@voxmediahouse.nl";
      zoals casting.html, heeft deze elementen niet -- zonder deze wacht gaf
      GSAP daar console-waarschuwingen ("GSAP target ... not found"). */
   if (document.querySelector(".hero")) {
-    gsap.from(".hero__mark, .hero__title, .hero__sub, .hero__acts", {
-      opacity: 0, y: 26, duration: 1, ease: "power3.out", stagger: .09, delay: .12,
+    /* De kop zelf loopt via CSS (woord voor woord, zonder opacity, zodat de
+       eerste verf direct leesbaar is); hier alleen merkteken, tekst en knoppen. */
+    gsap.from(".hero__mark, .hero__sub, .hero__acts", {
+      opacity: 0, y: 22, duration: .8, ease: "power3.out", stagger: .08, delay: .05,
       clearProps: "opacity,transform,willChange"
     });
     /* Het beeld in de hero schuift binnen zijn eigen kader, zodat er nooit een
