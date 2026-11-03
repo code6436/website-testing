@@ -9,6 +9,17 @@ var INFO_MAIL = "info@voxmediahouse.nl";
   var html = document.documentElement;
   var animOn = html.classList.contains("anim");
 
+  /* ---------- laadintro opruimen ----------
+     De intro is CSS en eindigt zelf (visibility:hidden). Dit haalt de laag
+     daarna uit de pagina; vangnet na 1,8 s, ook als animationend uitblijft. */
+  var introLaag = document.querySelector(".intro");
+  var introAan = html.classList.contains("intro-aan");
+  if (introLaag) {
+    var introWeg = function () { if (introLaag && introLaag.parentNode) { introLaag.parentNode.removeChild(introLaag); } introLaag = null; };
+    introLaag.addEventListener("animationend", function (e) { if (e.target === introLaag) { introWeg(); } });
+    window.setTimeout(introWeg, 1800);
+  }
+
   /* ---------- jaartal ---------- */
   var jaar = document.getElementById("jaar");
   if (jaar) { jaar.textContent = String(new Date().getFullYear()); }
@@ -273,6 +284,9 @@ var INFO_MAIL = "info@voxmediahouse.nl";
   }
 
   gsap.registerPlugin(ScrollTrigger);
+  /* Mobiel: de adresbalk die in- en uitschuift geeft een resize; niet elke keer
+     alles herberekenen (gaf een ruk in de scrub-animaties). */
+  ScrollTrigger.config({ ignoreMobileResize: true });
 
   /* ---------- ankerlinks ---------- */
   /* Altijd zelf de doelpositie uitrekenen. Een element doorgeven aan Lenis
@@ -309,15 +323,29 @@ var INFO_MAIL = "info@voxmediahouse.nl";
   var LenisCtor = lenisUit ? null : (window.Lenis || (window.lenis && window.lenis.default));
   var lenis = null;
   if (LenisCtor) {
-    lenis = new LenisCtor({ duration: 1.05, smoothWheel: true });
+    /* Rustig en natuurlijk: korte uitloop (lerp), muiswiel iets getemperd.
+       Touch blijft native (syncTouch uit). Een open dialoog scrolt zelf. */
+    lenis = new LenisCtor({
+      lerp: .09, wheelMultiplier: .9, smoothWheel: true, syncTouch: false,
+      prevent: function (node) { return !!(node && node.closest && node.closest("dialog")); }
+    });
     lenis.on("scroll", function (e) { ScrollTrigger.update(); navUpdate(e.scroll || window.scrollY || 0); });
     gsap.ticker.add(function (t) { lenis.raf(t * 1000); });
     gsap.ticker.lagSmoothing(0);
-    ankersKoppelen(function (y) { lenis.scrollTo(y, { duration: 1.1 }); });
+    ankersKoppelen(function (y) {
+      /* Duur naar afstand: kort stukje vlot, lange afstand rustig. */
+      var afstand = Math.abs(y - (window.scrollY || 0));
+      var duur = Math.max(.7, Math.min(1.6, .55 + afstand / 3200));
+      lenis.scrollTo(y, { duration: duur, easing: function (t) { return t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; } });
+    });
   } else {
     ankersKoppelen(null);
     window.addEventListener("scroll", function () { navUpdate(window.scrollY || 0); }, { passive: true });
   }
+
+  /* Eén gladstrijk-laag: draait Lenis, dan volgen scrub-animaties de (al
+     gladde) positie direct. Anders kwam er een tweede vertraging bovenop. */
+  var scrubZacht = lenis ? true : .8;
 
   /* ---------- reveals ----------
      Alleen de pakketkaarten en twee beelden komen één keer binnen; terug
@@ -350,7 +378,7 @@ var INFO_MAIL = "info@voxmediahouse.nl";
   gsap.utils.toArray(".card__kader img, .pillar__img img").forEach(function (im) {
     gsap.fromTo(im, { yPercent: -5, scale: 1.11 }, {
       yPercent: 5, scale: 1.11, ease: "none",
-      scrollTrigger: { trigger: im.parentNode, start: "top bottom", end: "bottom top", scrub: .8 }
+      scrollTrigger: { trigger: im.parentNode, start: "top bottom", end: "bottom top", scrub: scrubZacht }
     });
   });
 
@@ -379,14 +407,18 @@ var INFO_MAIL = "info@voxmediahouse.nl";
   /* Scrollen geeft de band een zetje. Het tempo wordt naartoe getweend en
      zakt daarna terug, zodat er geen schokje in zit. */
   if (banden.length) {
-    var rust = null;
+    var rust = null, laatsteDoel = 1;
     ScrollTrigger.create({
       trigger: "body", start: "top top", end: "bottom bottom",
       onUpdate: function (self) {
-        var doel = Math.min(2, 1 + Math.abs(self.getVelocity()) / 1400);
-        banden.forEach(function (b) { gsap.to(b, { timeScale: doel, duration: .25, overwrite: true }); });
+        var doel = Math.round(Math.min(2, 1 + Math.abs(self.getVelocity()) / 1400) * 10) / 10;
+        if (doel !== laatsteDoel) {
+          laatsteDoel = doel;
+          banden.forEach(function (b) { gsap.to(b, { timeScale: doel, duration: .25, overwrite: true }); });
+        }
         clearTimeout(rust);
         rust = setTimeout(function () {
+          laatsteDoel = 1;
           banden.forEach(function (b) { gsap.to(b, { timeScale: 1, duration: 1.1, ease: "power2.out", overwrite: true }); });
         }, 200);
       }
@@ -401,7 +433,7 @@ var INFO_MAIL = "info@voxmediahouse.nl";
     gsap.to(lijn, {
       scaleX: 1, ease: "none",
       scrollTrigger: {
-        trigger: document.body, start: "top top", end: "bottom bottom", scrub: .3,
+        trigger: document.body, start: "top top", end: "bottom bottom", scrub: lenis ? true : .3,
         onUpdate: function (self) { lijn.classList.toggle("is-aan", self.progress > 0.004); }
       }
     });
@@ -428,7 +460,7 @@ var INFO_MAIL = "info@voxmediahouse.nl";
     /* De kop zelf loopt via CSS (woord voor woord, zonder opacity, zodat de
        eerste verf direct leesbaar is); hier alleen merkteken, tekst en knoppen. */
     gsap.from(".hero__mark, .hero__sub, .hero__acts", {
-      opacity: 0, y: 22, duration: .8, ease: "power3.out", stagger: .08, delay: .05,
+      opacity: 0, y: 22, duration: .8, ease: "power3.out", stagger: .08, delay: introAan ? .55 : .05,
       clearProps: "opacity,transform,willChange"
     });
     /* Het beeld in de hero schuift binnen zijn eigen kader, zodat er nooit een
@@ -456,10 +488,13 @@ var INFO_MAIL = "info@voxmediahouse.nl";
       lead.appendChild(s);
       spans.push(s);
     });
+    var totNu = -1;
     ScrollTrigger.create({
       trigger: lead, start: "top 78%", end: "bottom 58%", scrub: true,
       onUpdate: function (self) {
         var tot = Math.round(self.progress * spans.length);
+        if (tot === totNu) { return; }
+        totNu = tot;
         spans.forEach(function (s, i) { s.classList.toggle("on", i < tot); });
       }
     });
@@ -469,7 +504,10 @@ var INFO_MAIL = "info@voxmediahouse.nl";
   var stappen = gsap.utils.toArray(".flow .step");
   var dots = gsap.utils.toArray(".flow__dots li");
   if (stappen.length) {
+    var iNu = -1;
     var zet = function (i) {
+      if (i === iNu) { return; }
+      iNu = i;
       stappen.forEach(function (s, n) { s.classList.toggle("on", n === i); });
       dots.forEach(function (d, n) { d.classList.toggle("on", n === i); });
     };

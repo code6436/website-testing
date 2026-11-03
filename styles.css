@@ -660,11 +660,45 @@ section[id]{scroll-margin-top:82px}
 .anim [data-kop].is-in .kw>span{transform:none}
 .anim .hero__title .kw{overflow:visible;padding:0;margin:0}
 .anim .hero__title .kw>span{transform:none;transition:none;animation:kopop .9s var(--ease) both}
-.anim .hero__title .kw:nth-child(1)>span{animation-delay:60ms}
-.anim .hero__title .kw:nth-child(2)>span{animation-delay:130ms}
-.anim .hero__title .kw:nth-child(3)>span{animation-delay:200ms}
-.anim .hero__title .kw:nth-child(4)>span{animation-delay:270ms}
-.anim .hero__title .kw:nth-child(5)>span{animation-delay:340ms}
-.anim .hero__title .kw:nth-child(6)>span{animation-delay:410ms}
-.anim .hero__title .kw:nth-child(n+7)>span{animation-delay:480ms}
+.anim .hero__title .kw:nth-child(1)>span{animation-delay:calc(var(--intro,0s) + 60ms)}
+.anim .hero__title .kw:nth-child(2)>span{animation-delay:calc(var(--intro,0s) + 130ms)}
+.anim .hero__title .kw:nth-child(3)>span{animation-delay:calc(var(--intro,0s) + 200ms)}
+.anim .hero__title .kw:nth-child(4)>span{animation-delay:calc(var(--intro,0s) + 270ms)}
+.anim .hero__title .kw:nth-child(5)>span{animation-delay:calc(var(--intro,0s) + 340ms)}
+.anim .hero__title .kw:nth-child(6)>span{animation-delay:calc(var(--intro,0s) + 410ms)}
+.anim .hero__title .kw:nth-child(n+7)>span{animation-delay:calc(var(--intro,0s) + 480ms)}
 @keyframes kopop{from{transform:translateY(.42em)}to{transform:none}}
+
+/* ---------- laadintro: zwart, logo, een flits, dan de site ----------
+   Alleen met .intro-aan (intro.js: index, eenmaal per sessie, niet bij
+   verminderde beweging). Zonder die klasse is de laag uit. De animatie
+   eindigt zelf op visibility:hidden, dus ze kan de site nooit blokkeren.
+   Alleen opacity en transform. Eén flits, geen herhaling. Totaal 1,05 s. */
+.intro{display:none}
+.intro-aan{--intro:.5s}
+.intro-aan .intro{display:block;position:fixed;inset:0;z-index:1000;pointer-events:none;
+  animation:intro-weg 1.05s linear both}
+.intro__zwart,.intro__flits{position:absolute;inset:0}
+.intro__zwart{background:#000;animation:intro-zwart 1.05s linear both}
+.intro__logo{position:absolute;left:50%;top:50%;width:84px;height:84px;margin:-42px 0 0 -42px;
+  animation:intro-logo 1.05s linear both}
+.intro__logo svg{display:block}
+.intro__flits{background:#fff;opacity:0;animation:intro-flits 1.05s linear both}
+@keyframes intro-weg{0%,99.9%{visibility:visible}100%{visibility:hidden}}
+@keyframes intro-zwart{0%,51%{opacity:1}52%,100%{opacity:0}}
+@keyframes intro-logo{
+  0%{opacity:0;transform:scale(.94);animation-timing-function:cubic-bezier(.22,1,.36,1)}
+  24%{opacity:1;transform:scale(1)}
+  51%{opacity:1;transform:scale(1.02)}
+  52%,100%{opacity:0;transform:scale(1.02)}}
+/* Flits: razendsnel op, daarna uitdoven zoals een echte flitser. */
+@keyframes intro-flits{
+  0%,47%{opacity:0}
+  52%{opacity:.94}
+  62%{opacity:.5}
+  78%{opacity:.14}
+  100%{opacity:0}}
+/* Het beeld landt na de flits: een rustige scherpstelbeweging. */
+.intro-aan .hero__poster,.intro-aan .hero__video{animation:intro-zoom 1.5s var(--ease) .5s both}
+@keyframes intro-zoom{from{transform:scale(1.07)}to{transform:none}}
+@media (prefers-reduced-motion:reduce){.intro{display:none!important}}
