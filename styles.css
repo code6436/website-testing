@@ -120,17 +120,9 @@ ul,ol{margin:0;padding:0;list-style:none}
    Donker, maar licht genoeg dat de video goed zichtbaar blijft. */
 .hero__scrim{position:absolute;inset:0;z-index:1;pointer-events:none;background:
   linear-gradient(180deg,rgba(0,0,0,.84) 0%,rgba(0,0,0,.42) 14%,
-  rgba(0,0,0,.18) 34%,rgba(0,0,0,.36) 60%,rgba(0,0,0,.78) 100%)}
+  rgba(0,0,0,.42) 34%,rgba(0,0,0,.66) 58%,rgba(0,0,0,.84) 100%)}
 .hero__in{position:relative;z-index:2;max-width:var(--max);margin:0 auto;width:100%;
   padding:0 var(--gut) clamp(64px,11vh,120px)}
-/* Donkere sluier alleen achter het tekstvlak, zodat de video elders helderder mag blijven. */
-.hero__in::before{content:"";position:absolute;z-index:-1;left:calc(50% - 50vw);right:8%;top:-40px;bottom:0;pointer-events:none;
-  background:linear-gradient(90deg,rgba(0,0,0,.68) 0%,rgba(0,0,0,.68) 80%,rgba(0,0,0,0) 100%);
-  -webkit-mask-image:linear-gradient(180deg,transparent 0%,#000 14%);mask-image:linear-gradient(180deg,transparent 0%,#000 14%)}
-/* Smal scherm: tekst loopt tot de rand, dus de vervaging valt buiten beeld (hero knipt af).
-   De sluier begint hoger, zodat de uitloop boven merkteken en kop valt en niet erachter. */
-@media (max-width:600px){.hero__in::before{right:-25%;top:-140px}}
-.hero__mark{color:var(--ink);width:clamp(44px,5vw,56px);height:auto;margin-bottom:26px}
 .hero__title{font-size:clamp(2.35rem,6.4vw,5rem);max-width:17ch;letter-spacing:-.03em;line-height:1.02}
 .hero__sub{margin-top:20px;font-size:clamp(1rem,1.5vw,1.2rem);color:var(--ink);max-width:46ch}
 .hero__acts{margin-top:36px;display:flex;gap:12px;flex-wrap:wrap}
@@ -583,7 +575,7 @@ section[id]{scroll-margin-top:82px}
 .foot{border-top:0}
 .foot::before{content:"";position:absolute;left:0;right:0;top:0;height:4px;z-index:1;background:#FA8A00}
 .nav--solid::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px;background:#FA8A00}
-.hero::after{content:"";position:absolute;left:0;right:0;bottom:0;height:6px;z-index:3;background:#FA8A00}
+.merken::before{content:"";position:absolute;left:0;right:0;top:0;height:6px;z-index:1;background:#FA8A00}
 .nav__cta{box-shadow:none}
 
 /* hover = kleurwissel; op een kleurvlak wisselt de zwarte knop naar de andere kleur */
@@ -669,36 +661,47 @@ section[id]{scroll-margin-top:82px}
 .anim .hero__title .kw:nth-child(n+7)>span{animation-delay:calc(var(--intro,0s) + 480ms)}
 @keyframes kopop{from{transform:translateY(.42em)}to{transform:none}}
 
-/* ---------- laadintro: zwart, logo, een flits, dan de site ----------
-   Alleen met .intro-aan (intro.js: index, eenmaal per sessie, niet bij
-   verminderde beweging). Zonder die klasse is de laag uit. De animatie
-   eindigt zelf op visibility:hidden, dus ze kan de site nooit blokkeren.
-   Alleen opacity en transform. Eén flits, geen herhaling. Totaal 1,05 s. */
+/* ---------- laadintro: logo op zwart, een flits, dan opent de sluiter ----------
+   Alleen met html.anim.intro-aan (intro.js: index, eenmaal per sessie; .anim
+   ontbreekt bij verminderde beweging, zonder JS is er geen klasse). De hero
+   staat al onder de laag en wordt dus nooit uitgesteld. Alleen transform en
+   opacity (geen repaint): twee zwarte bladen schuiven na de flits omhoog en
+   omlaag uit elkaar, elk met een dun gouden randje aan de naad. Totaal 1,9 s:
+   0-0,9 s logo, 0,9 s flits, 0,9-1,75 s sluiter open. De laag eindigt zelf op
+   opacity 0 en intro.js haalt hem na animationend uit de DOM. */
 .intro{display:none}
-.intro-aan{--intro:.5s}
-.intro-aan .intro{display:block;position:fixed;inset:0;z-index:1000;pointer-events:none;
-  animation:intro-weg 1.05s linear both}
-.intro__zwart,.intro__flits{position:absolute;inset:0}
-.intro__zwart{background:#000;animation:intro-zwart 1.05s linear both}
+html.anim.intro-aan{--intro:1s}
+html.anim.intro-aan .intro{display:block;position:fixed;inset:0;z-index:1000;pointer-events:none;
+  animation:intro-weg 1.9s linear both}
+.intro__flits{position:absolute;inset:0}
+.intro__zwart{position:absolute;left:0;right:0;height:51%;background:#000;will-change:transform}
+.intro__zwart--boven{top:0;border-bottom:2px solid #B9944A;box-sizing:border-box;
+  animation:intro-boven 1.9s linear both}
+.intro__zwart--onder{bottom:0;border-top:2px solid #B9944A;box-sizing:border-box;
+  animation:intro-onder 1.9s linear both}
 .intro__logo{position:absolute;left:50%;top:50%;width:84px;height:84px;margin:-42px 0 0 -42px;
-  animation:intro-logo 1.05s linear both}
+  animation:intro-logo 1.9s linear both}
 .intro__logo svg{display:block}
-.intro__flits{background:#fff;opacity:0;animation:intro-flits 1.05s linear both}
-@keyframes intro-weg{0%,99.9%{visibility:visible}100%{visibility:hidden}}
-@keyframes intro-zwart{0%,51%{opacity:1}52%,100%{opacity:0}}
+.intro__flits{background:#fff;opacity:0;animation:intro-flits 1.9s linear both}
+@keyframes intro-weg{0%,97%{opacity:1}100%{opacity:0}}
+@keyframes intro-boven{
+  0%,47%{transform:none;animation-timing-function:cubic-bezier(.65,0,.2,1)}
+  93%,100%{transform:translateY(-102%)}}
+@keyframes intro-onder{
+  0%,47%{transform:none;animation-timing-function:cubic-bezier(.65,0,.2,1)}
+  93%,100%{transform:translateY(102%)}}
 @keyframes intro-logo{
   0%{opacity:0;transform:scale(.94);animation-timing-function:cubic-bezier(.22,1,.36,1)}
-  24%{opacity:1;transform:scale(1)}
-  51%{opacity:1;transform:scale(1.02)}
-  52%,100%{opacity:0;transform:scale(1.02)}}
+  18%{opacity:1;transform:scale(1)}
+  48%{opacity:1;transform:scale(1.02);animation-timing-function:cubic-bezier(.5,0,1,1)}
+  58%,100%{opacity:0;transform:scale(1.25)}}
 /* Flits: razendsnel op, daarna uitdoven zoals een echte flitser. */
 @keyframes intro-flits{
-  0%,47%{opacity:0}
-  52%{opacity:.94}
-  62%{opacity:.5}
-  78%{opacity:.14}
-  100%{opacity:0}}
-/* Het beeld landt na de flits: een rustige scherpstelbeweging. */
-.intro-aan .hero__poster,.intro-aan .hero__video{animation:intro-zoom 1.5s var(--ease) .5s both}
-@keyframes intro-zoom{from{transform:scale(1.07)}to{transform:none}}
+  0%,43%{opacity:0}
+  46%{opacity:.85}
+  53%{opacity:.25}
+  62%,100%{opacity:0}}
+/* Het beeld landt terwijl de sluiter opent: een rustige scherpstelbeweging. */
+html.anim.intro-aan .hero__poster,html.anim.intro-aan .hero__video{animation:intro-zoom 1.2s var(--ease) .95s both}
+@keyframes intro-zoom{from{transform:scale(1.08)}to{transform:none}}
 @media (prefers-reduced-motion:reduce){.intro{display:none!important}}

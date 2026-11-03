@@ -458,15 +458,15 @@ var INFO_MAIL = "info@voxmediahouse.nl";
      GSAP daar console-waarschuwingen ("GSAP target ... not found"). */
   if (document.querySelector(".hero")) {
     /* De kop zelf loopt via CSS (woord voor woord, zonder opacity, zodat de
-       eerste verf direct leesbaar is); hier alleen merkteken, tekst en knoppen. */
-    gsap.from(".hero__mark, .hero__sub, .hero__acts", {
-      opacity: 0, y: 22, duration: .8, ease: "power3.out", stagger: .08, delay: introAan ? .55 : .05,
+       eerste verf direct leesbaar is); hier alleen tekst en knoppen. */
+    gsap.from(".hero__sub, .hero__acts", {
+      opacity: 0, y: 22, duration: .8, ease: "power3.out", stagger: .08, delay: introAan ? 1.15 : .05,
       clearProps: "opacity,transform,willChange"
     });
     /* Het beeld in de hero schuift binnen zijn eigen kader, zodat er nooit een
        rand vrijkomt en er geen laag over de tekst heen ligt. */
     gsap.to(".hero__media", {
-      yPercent: 7, scale: 1.03, ease: "none",
+      yPercent: 6, scale: 1.18, ease: "none",
       scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: true }
     });
   }
