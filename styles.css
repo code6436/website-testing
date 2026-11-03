@@ -10,13 +10,15 @@
 :root{
   color-scheme:dark;
   --bg:#000000;
-  --bg-2:#191919;
-  --sand:#262626;
-  --line:#2A2A2A;
-  --line-2:#3A3A3A;
-  --ink:#DCE1E0;
-  --muted:#A3ABAA;
-  --muted-op-zand:#B4BCBB;
+  --bg-2:#1C1419;
+  --sand:#281B23;
+  --line:rgba(255,122,184,.18);
+  --line-2:rgba(232,163,198,.55);
+  --ink:#F2E9EE;
+  --muted:#E8A3C6;
+  --muted-op-zand:#E8A3C6;
+  --roze-zacht:#E8A3C6;
+  --roze-tint:#FFD9EB;
   --accent:#FA8A00;
   --goud:#B9944A;
   --knop:#FA8A00;
@@ -162,7 +164,7 @@ section{position:relative}
 }
 
 /* ---------- merkenband (zweeft op de achtergrond) ---------- */
-.merken{padding:clamp(32px,5vh,56px) 0;background:#191919}
+.merken{padding:clamp(32px,5vh,56px) 0;background:var(--bg-2)}
 .merken__kop{max-width:var(--max);margin:0 auto clamp(20px,3vh,32px);padding:0 var(--gut);
   font-size:13px;font-weight:600;color:var(--muted)}
 /* Klemmen zit hier, niet meer op .merken zelf, en met 32px speling aan
@@ -219,7 +221,7 @@ section{position:relative}
 
 /* woorden die tijdens het scrollen oplichten */
 [data-words] .w{display:inline-block}
-.anim [data-words] .w{color:#7C8584;transition:color .45s var(--ease)}
+.anim [data-words] .w{color:color-mix(in srgb,var(--muted) 70%,#000);transition:color .45s var(--ease)}
 .anim [data-words] .w.on{color:var(--ink)}
 
 /* ---------- werk ---------- */
@@ -236,7 +238,7 @@ section{position:relative}
 .card h3{font-size:1.05rem;margin-top:4px}
 .card p{color:var(--muted);font-size:.94rem;margin-top:5px}
 .pillar__img img{will-change:transform}
-.card.is-placeholder h3{color:#8F9796}
+.card.is-placeholder h3{color:color-mix(in srgb,var(--muted) 70%,#000)}
 
 /* ---------- packages ---------- */
 .packages{padding:clamp(60px,10vh,140px) 0;border-top:1px solid var(--line);background:var(--bg-2)}
@@ -285,7 +287,7 @@ section{position:relative}
 .form{background:var(--bg-2);border:1px solid var(--line);border-radius:18px;padding:clamp(22px,2.6vw,34px)}
 .field{margin-bottom:16px}
 .field label{display:block;font-size:13px;color:var(--muted);margin-bottom:7px}
-.field input,.field textarea{width:100%;background:#0D0D0D;border:1px solid var(--line-2);
+.field input,.field textarea{width:100%;background:#120C10;border:1px solid var(--line-2);
   border-radius:10px;color:var(--ink);font:inherit;font-size:16px;padding:13px 14px;resize:vertical}
 .field input:focus,.field textarea:focus{border-color:var(--accent);outline:none}
 .form__note{margin-top:14px;font-size:13px;color:var(--muted);text-align:center}
@@ -416,7 +418,7 @@ section[id]{scroll-margin-top:82px}
 .form fieldset{border:1px solid var(--line);border-radius:14px;padding:20px;margin:0 0 22px;min-width:0}
 .form legend{padding:0 8px;font-weight:600;font-size:.95rem}
 .form__hint{color:var(--muted);font-size:.88rem;margin:-6px 0 16px}
-.field select{width:100%;background:#0D0D0D;border:1px solid var(--line-2);
+.field select{width:100%;background:#120C10;border:1px solid var(--line-2);
   border-radius:10px;color:var(--ink);font:inherit;font-size:16px;padding:13px 14px;min-height:44px}
 .field select:focus{border-color:var(--accent);outline:none}
 .field input:focus-visible,.field textarea:focus-visible,.field select:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
@@ -539,13 +541,13 @@ section[id]{scroll-margin-top:82px}
   --line:rgba(0,0,0,.30);--line-2:rgba(0,0,0,.45);--sand:rgba(0,0,0,.12);
   --blok:#7D04E6;background-color:#FA8A00;color:#000000;border-top:0}
 /* Klantenband: rustig donker vlak (zelfde #191919 als de pakketten), lichte inkt. */
-.merken{--ink:#DCE1E0;--muted:#A3ABAA;--accent:#DCE1E0;
-  --line:rgba(255,255,255,.14);--line-2:rgba(255,255,255,.22);--sand:rgba(255,255,255,.08);
-  --blok:#7D04E6;background-color:#191919;color:#DCE1E0;border-top:0}
-.pillar--flip,.castingband,.cta{--ink:#FFFFFF;--muted:#F1E6FF;--accent:#FFFFFF;
+.merken{--ink:#F2E9EE;--muted:#E8A3C6;--accent:var(--roze);
+  --line:rgba(255,122,184,.18);--line-2:rgba(255,122,184,.3);--sand:rgba(255,122,184,.08);
+  --blok:#7D04E6;background-color:var(--bg-2);color:#F2E9EE;border-top:0}
+.pillar--flip,.castingband,.cta{--ink:#FFFFFF;--muted:var(--roze-tint);--accent:#FFFFFF;
   --line:rgba(255,255,255,.38);--line-2:rgba(255,255,255,.5);--sand:rgba(255,255,255,.16);
   --blok:#FA8A00;background-color:#7D04E6;color:#FFFFFF;border-top:0}
-.cta .form{--ink:#DCE1E0;--muted:#A3ABAA;--accent:#FA8A00;--line:#2A2A2A;--line-2:#3A3A3A;--sand:#262626;color:#DCE1E0}
+.cta .form{--ink:#F2E9EE;--muted:#E8A3C6;--accent:#FA8A00;--line:rgba(255,122,184,.18);--line-2:rgba(232,163,198,.55);--sand:#281B23;color:#F2E9EE}
 .pillar--flip{box-shadow:0 0 0 100vmax #7D04E6;clip-path:inset(0 -100vmax)}
 .pillar--flip+.pillar,.pillar+.pillar--flip{border-top:0}
 
@@ -561,7 +563,7 @@ section[id]{scroll-margin-top:82px}
 /* grote koppen op zwart: effen oranje (8:1 op zwart) */
 .work .sec__head h2,.reviews .sec__head h2,.packages .sec__head h2,.ster__in h2,.pillars .sec__head h2{color:#FA8A00}
 
-.packages{background:#191919}
+.packages{background:var(--bg-2)}
 .pack--lift{border-color:#FA8A00;box-shadow:0 0 0 1px #FA8A00}
 
 /* beelden zonder kader of schaduw */
@@ -588,7 +590,7 @@ section[id]{scroll-margin-top:82px}
    naar licht grijs. Logo's met eigen vlak (De Maat Fabriek, Lumex, ShakeKings)
    hebben daarom een afgeleide PNG met alleen het logo als alpha (*-2026-11.png);
    de bronbestanden zijn niet aangeraakt. Terugdraaien: deze regel weg. */
-.merken__spoor img{filter:brightness(0) invert(.86);opacity:.72}
+.merken__spoor img{filter:brightness(0) invert(.92);opacity:.78}
 
 /* Anker naar het pakket Events & Aftermovies: de vaste menubalk mag de kop niet bedekken. */
 .pack{scroll-margin-top:110px}
