@@ -365,7 +365,7 @@ var INFO_MAIL = "info@voxmediahouse.nl";
   var banden = [];
   rijen.forEach(function (rij) {
     var naarLinks = rij.classList.contains("merken__rij--links");
-    var tijd = naarLinks ? 68 : 82;
+    var tijd = naarLinks ? 88 : 104;
     gsap.set(rij, { xPercent: naarLinks ? 0 : -50 });
     var band = gsap.to(rij, {
       xPercent: naarLinks ? -50 : 0,
@@ -383,7 +383,7 @@ var INFO_MAIL = "info@voxmediahouse.nl";
     ScrollTrigger.create({
       trigger: "body", start: "top top", end: "bottom bottom",
       onUpdate: function (self) {
-        var doel = Math.min(3, 1 + Math.abs(self.getVelocity()) / 1400);
+        var doel = Math.min(2, 1 + Math.abs(self.getVelocity()) / 1400);
         banden.forEach(function (b) { gsap.to(b, { timeScale: doel, duration: .25, overwrite: true }); });
         clearTimeout(rust);
         rust = setTimeout(function () {

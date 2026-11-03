@@ -170,9 +170,9 @@ section{position:relative}
 }
 
 /* ---------- merkenband (zweeft op de achtergrond) ---------- */
-.merken{padding:clamp(28px,4vh,44px) 0 clamp(40px,6vh,72px);background:#FA8A00}
+.merken{padding:clamp(32px,5vh,56px) 0;background:#191919}
 .merken__kop{max-width:var(--max);margin:0 auto clamp(20px,3vh,32px);padding:0 var(--gut);
-  font-size:13px;font-weight:600;color:#000000}
+  font-size:13px;font-weight:600;color:var(--muted)}
 /* Klemmen zit hier, niet meer op .merken zelf, en met 32px speling aan
    weerskanten (via negatieve margin + evenveel padding terug). Zonder die
    speling knipte een vergroot logo (hover, scale 1.28) hard af zodra het
@@ -203,7 +203,7 @@ section{position:relative}
    Culinair Plaza") -- die moeten hun eigen breedte kunnen houden, anders
    loopt de tekst met white-space:nowrap over de buren heen. */
 .merken__spoor li{white-space:nowrap;font-size:clamp(.95rem,1.5vw,1.15rem);font-weight:600;
-  letter-spacing:-.01em;color:#000000}
+  letter-spacing:-.01em;color:var(--muted);min-height:34px;min-width:156px;text-align:center}
 .merken__spoor li:has(img){width:156px;height:34px;flex:none;display:flex;align-items:center;justify-content:center;text-align:center}
 .merken__spoor img{box-sizing:content-box;max-height:34px;max-width:120px;width:auto;height:auto;object-fit:contain;}
 /* De band loopt met GSAP zodra dat geladen is; dan zet main.js de class
@@ -212,8 +212,8 @@ section{position:relative}
    zonder te springen: een nieuwe animation-duration laat de browser de
    verstreken tijd omrekenen en dat is zichtbaar als een sprong. */
 .merken__rij{will-change:transform}
-.merken__rij--links .merken__spoor{animation:schuif 68s linear infinite}
-.merken__rij--rechts .merken__spoor{animation:schuif 82s linear infinite reverse}
+.merken__rij--links .merken__spoor{animation:schuif 88s linear infinite}
+.merken__rij--rechts .merken__spoor{animation:schuif 104s linear infinite reverse}
 @keyframes schuif{from{transform:translateX(0)}to{transform:translateX(-100%)}}
 .merken--js .merken__spoor{animation:none}
 
@@ -334,7 +334,8 @@ section[id]{scroll-margin-top:82px}
   .merken__spoor{animation:none!important}
   .merken__rij{width:100%;flex-wrap:wrap}
   .merken__rij .merken__spoor:last-child{display:none}
-  .merken__spoor{flex-wrap:wrap;row-gap:12px}
+  .merken__spoor{flex-wrap:wrap;row-gap:18px;flex:0 1 auto;max-width:100%;padding:0 var(--gut);box-sizing:border-box}
+  .merken__band{gap:18px}
 }
 
 /* ---------- vakmanschapsregel ---------- */
@@ -361,7 +362,7 @@ section[id]{scroll-margin-top:82px}
     transform-origin:center}
   .merken__spoor li:hover img{transform:scale(1.28);opacity:1}
   .merken__spoor li{transition:color .32s var(--ease)}
-  .merken__spoor li:hover{color:#14120F}
+  .merken__spoor li:hover{color:var(--ink)}
   /* Geldt voor elk logo, zonder uitzondering: het vergrote logo moet altijd
      bovenop alles komen te liggen -- de buren in de rij, de rand van de
      sectie, alles. Zonder een eigen stapelvolgorde (z-index) schilderen
@@ -540,9 +541,13 @@ section[id]{scroll-margin-top:82px}
 .voortgang{background:var(--roze)}
 
 /* kleurvlakken: variabelen lokaal omzetten, dan volgt alle tekst vanzelf */
-.merken,.diensten,.webbouw{--ink:#000000;--muted:#000000;--accent:#000000;
+.diensten,.webbouw{--ink:#000000;--muted:#000000;--accent:#000000;
   --line:rgba(0,0,0,.30);--line-2:rgba(0,0,0,.45);--sand:rgba(0,0,0,.12);
   --blok:#7D04E6;background-color:#FA8A00;color:#000000;border-top:0}
+/* Klantenband: rustig donker vlak (zelfde #191919 als de pakketten), lichte inkt. */
+.merken{--ink:#DCE1E0;--muted:#A3ABAA;--accent:#DCE1E0;
+  --line:rgba(255,255,255,.14);--line-2:rgba(255,255,255,.22);--sand:rgba(255,255,255,.08);
+  --blok:#7D04E6;background-color:#191919;color:#DCE1E0;border-top:0}
 .pillar--flip,.castingband,.cta{--ink:#FFFFFF;--muted:#F1E6FF;--accent:#FFFFFF;
   --line:rgba(255,255,255,.38);--line-2:rgba(255,255,255,.5);--sand:rgba(255,255,255,.16);
   --blok:#FA8A00;background-color:#7D04E6;color:#FFFFFF;border-top:0}
@@ -583,17 +588,13 @@ section[id]{scroll-margin-top:82px}
 
 /* hover = kleurwissel; op een kleurvlak wisselt de zwarte knop naar de andere kleur */
 
-/* Klantlogo's die van zichzelf licht zijn verdwijnen op de oranje balk
-   (gemeten < 3:1). Die zeven worden zwarte silhouetten (8,7:1). Logo's met
-   een eigen gekleurd vlak (De Maat Fabriek, Lumex, Sol de Janeiro) blijven
-   ongemoeid. Terugdraaien: deze regel verwijderen. */
-.merken__spoor li[data-merk="deryan"] img,
-.merken__spoor li[data-merk="easytoys"] img,
-.merken__spoor li[data-merk="oger"] img,
-.merken__spoor li[data-merk="shermanology"] img,
-.merken__spoor li[data-merk="the-eyden-berg"] img,
-.merken__spoor li[data-merk="undiemeister"] img,
-.merken__spoor li[data-merk="wellshave"] img{filter:brightness(0)}
+/* Klantlogo's: allemaal dezelfde ingetogen lichte tint (#DBDBDB op 72%, ca.
+   6:1 op #191919; bij hover 100%, bij rij-hover de rest 50% = ca. 3,9:1).
+   brightness(0) maakt van het alpha-kanaal een silhouet, invert(.86) tilt dat
+   naar licht grijs. Logo's met eigen vlak (De Maat Fabriek, Lumex, ShakeKings)
+   hebben daarom een afgeleide PNG met alleen het logo als alpha (*-2026-11.png);
+   de bronbestanden zijn niet aangeraakt. Terugdraaien: deze regel weg. */
+.merken__spoor img{filter:brightness(0) invert(.86);opacity:.72}
 
 /* Anker naar het pakket Events & Aftermovies: de vaste menubalk mag de kop niet bedekken. */
 .pack{scroll-margin-top:110px}
@@ -613,13 +614,12 @@ section[id]{scroll-margin-top:82px}
 .merken__spoor li[data-merk="fiido"] img,
 .merken__spoor li[data-merk="mijn-huys"] img{max-height:22px}
 .merken__spoor li[data-merk="focuscare"] img{max-height:20px}
-.merken__spoor li[data-merk="icon-amsterdam"] img,
-.merken__spoor li[data-merk="de-maat-fabriek"] img,
-.merken__spoor li[data-merk="lumex"] img{max-height:30px}
+.merken__spoor li[data-merk="icon-amsterdam"] img{max-height:30px}
 .merken__spoor li[data-merk="skil"] img{max-height:26px}
 .merken__spoor li[data-merk="uns"] img{max-height:25px}
-.merken__spoor li[data-merk="artin-athletics"] img,
-.merken__spoor li[data-merk="shakekings"] img{max-height:28px}
+.merken__spoor li[data-merk="artin-athletics"] img{max-height:28px}
+.merken__spoor li[data-merk="de-maat-fabriek"] img{max-height:44px}
+.merken__spoor li[data-merk="lumex"] img{height:18px;max-height:none}
 .merken__spoor li[data-merk="mooiys"] img{max-height:31px}
 .merken__spoor li[data-merk="piet-de-wit-fietsspecialist"] img{max-height:27px}
 .merken__spoor li[data-merk="shermanology"] img{max-height:19px}

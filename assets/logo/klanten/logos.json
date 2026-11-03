@@ -8,13 +8,13 @@
   "bodyenfit": "bodyenfit-2026-11.png",
   "club-padel": "club-padel.png",
   "day-en-nite": "day-en-nite-2026-11.png",
-  "de-maat-fabriek": "de-maat-fabriek.png",
+  "de-maat-fabriek": "de-maat-fabriek-2026-11.png",
   "deryan": "deryan.png",
   "easytoys": "easytoys.png",
   "fiido": "fiido.png",
   "focuscare": "focuscare.png",
   "icon-amsterdam": "icon-amsterdam.png",
-  "lumex": "lumex.png",
+  "lumex": "lumex-2026-11.png",
   "manscaped": "manscaped.png",
   "mijn-huys": "mijn-huys.png",
   "mooiys": "mooiys.png",
@@ -23,7 +23,7 @@
   "piet-de-wit-fietsspecialist": "piet-de-wit-fietsspecialist.png",
   "reeva": "reeva.png",
   "rsm-alkmaar-culinair-plaza": "rsm-alkmaar-culinair-plaza-2026-11.png",
-  "shakekings": "shakekings.png",
+  "shakekings": "shakekings-2026-11.png",
   "shermanology": "shermanology.png",
   "skil": "skil.png",
   "sol-de-janeiro": "sol-de-janeiro-2026-11.png",
@@ -163,6 +163,18 @@
     ],
     "wellshave.png": [
       223,
+      114
+    ],
+    "de-maat-fabriek-2026-11.png": [
+      212,
+      230
+    ],
+    "lumex-2026-11.png": [
+      100,
+      15
+    ],
+    "shakekings-2026-11.png": [
+      159,
       114
     ]
   }
