@@ -212,16 +212,17 @@ section{position:relative}
 .merken--js .merken__spoor{animation:none}
 
 /* ---------- badge en opsomming ---------- */
-.badge,.pillar__txt .badge{display:flex;align-items:center;gap:.6rem;background:none;color:var(--muted);
-  font-size:.8rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;line-height:1.4;padding:0;border:0;border-radius:0;margin:0 0 16px;max-width:none}
-.badge::before{content:"";flex:none;width:6px;height:6px;border-radius:50%;background:var(--accent)}
-.lijst{margin-top:22px;display:grid;gap:12px;counter-reset:lijst}
-.lijst li{position:relative;padding-left:34px;font-size:1rem;line-height:1.5;counter-increment:lijst}
-.lijst li::before{content:counter(lijst,decimal-leading-zero);position:absolute;left:0;top:0;font-family:var(--font);font-size:.8rem;line-height:1.875;font-weight:600;font-variant-numeric:tabular-nums;color:var(--accent)}
+.badge,.pillar__txt .badge{display:inline-flex;align-items:center;max-width:100%;background:var(--roze);color:#000;
+  font-size:.8rem;font-weight:600;letter-spacing:.04em;line-height:1.4;padding:6px 12px;border:0;border-radius:6px;margin:0 0 16px;overflow-wrap:anywhere}
+.pillar--flip .badge,.castingband .badge,.cta .badge{background:var(--roze-tint);color:var(--paars)}
+.diensten .badge,.webbouw .badge{background:#000;color:var(--roze)}
+.lijst{margin-top:22px;display:grid;gap:12px}
+.lijst li{position:relative;padding-left:22px;font-size:1rem;line-height:1.5}
+.lijst li::before{content:"";position:absolute;left:0;top:.62em;width:6px;height:6px;background:var(--accent)}
 
 /* woorden die tijdens het scrollen oplichten */
 [data-words] .w{display:inline-block}
-.anim [data-words] .w{color:color-mix(in srgb,var(--muted) 70%,#000);transition:color .45s var(--ease)}
+.anim [data-words] .w{color:color-mix(in srgb,var(--muted) 85%,#000);transition:color .45s var(--ease)}
 .anim [data-words] .w.on{color:var(--ink)}
 
 /* ---------- werk ---------- */
@@ -238,7 +239,7 @@ section{position:relative}
 .card h3{font-size:1.05rem;margin-top:4px}
 .card p{color:var(--muted);font-size:.94rem;margin-top:5px}
 .pillar__img img{will-change:transform}
-.card.is-placeholder h3{color:color-mix(in srgb,var(--muted) 70%,#000)}
+.card.is-placeholder h3{color:color-mix(in srgb,var(--muted) 85%,#000)}
 
 /* ---------- packages ---------- */
 .packages{padding:clamp(60px,10vh,140px) 0;border-top:1px solid var(--line);background:var(--bg-2)}
