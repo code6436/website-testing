@@ -648,7 +648,7 @@ var INFO_MAIL = "info@voxmediahouse.nl";
    opnieuw na draaien/verbreden van het scherm. */
 (function () {
   "use strict";
-  var grid = document.querySelector(".review-grid");
+  var grid = document.querySelector(".review-track");
   if (!grid) { return; }
 
   var animOn = document.documentElement.classList.contains("anim");
@@ -752,5 +752,178 @@ var INFO_MAIL = "info@voxmediahouse.nl";
     breedte = window.innerWidth;
     if (wacht) { window.cancelAnimationFrame(wacht); }
     wacht = window.requestAnimationFrame(function () { wacht = null; meet(); });
+  });
+})();
+
+/* Reviewcarrousel: het spoor is een scroll-snap-rij (werkt zonder JS). Hier
+   komen knoppen, bolletjes en pauzeknop bij, en elke 6,5 s schuift de rij
+   een kaart verder (aan het eind terug naar begin). Pauze bij hover, focus
+   binnen de rij, sectie buiten beeld, verborgen tabblad en recente
+   handbediening; helemaal geen automatisch doorschuiven bij reduced motion. */
+(function () {
+  "use strict";
+  var wrap = document.querySelector(".carousel");
+  var spoor = wrap && wrap.querySelector(".review-track");
+  if (!spoor) { return; }
+  var kaarten = spoor.querySelectorAll(".review");
+  if (kaarten.length < 2) { return; }
+
+  var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var INTERVAL = 6500;
+  var posities = [], timer = null, wacht = null;
+  var staat = { hover: false, focus: false, zichtbaar: true, tab: true, pauze: false, laatsteHand: 0 };
+
+  wrap.classList.add("js-carousel");
+
+  var bar = document.createElement("div");
+  bar.className = "carousel__bar";
+  function maakKnop(cls, label, tekst) {
+    var b = document.createElement("button");
+    b.type = "button";
+    b.className = cls;
+    b.setAttribute("aria-label", label);
+    if (tekst) { b.textContent = tekst; }
+    return b;
+  }
+  var vorige = maakKnop("carousel__knop", "Vorige review", "←");
+  var volgende = maakKnop("carousel__knop", "Volgende review", "→");
+  var dots = document.createElement("div");
+  dots.className = "carousel__dots";
+  var pauzeknop = maakKnop("carousel__knop carousel__pauze", "Pauzeer automatisch wisselen", "Pauzeer");
+  bar.appendChild(vorige);
+  bar.appendChild(volgende);
+  bar.appendChild(dots);
+  if (!reduce) { bar.appendChild(pauzeknop); }
+  wrap.appendChild(bar);
+
+  function meetPosities() {
+    var pad = parseFloat(getComputedStyle(spoor).paddingLeft) || 0;
+    var max = spoor.scrollWidth - spoor.clientWidth;
+    var lijst = [];
+    Array.prototype.forEach.call(kaarten, function (k) {
+      var p = Math.max(0, Math.min(Math.round(k.offsetLeft - pad), max));
+      if (!lijst.length || p - lijst[lijst.length - 1] > 2) { lijst.push(p); }
+    });
+    posities = lijst;
+  }
+
+  function bouwDots() {
+    dots.textContent = "";
+    posities.forEach(function (p, i) {
+      var d = maakKnop("carousel__dot", "Ga naar review " + (i + 1) + " van " + posities.length);
+      d.addEventListener("click", function () { naar(i, true); });
+      dots.appendChild(d);
+    });
+  }
+
+  function zoekHuidig() {
+    var x = spoor.scrollLeft, beste = 0, afstand = Infinity;
+    posities.forEach(function (p, i) {
+      var a = Math.abs(p - x);
+      if (a < afstand) { afstand = a; beste = i; }
+    });
+    return beste;
+  }
+
+  function markeer() {
+    var h = zoekHuidig();
+    Array.prototype.forEach.call(dots.children, function (d, i) {
+      if (i === h) { d.setAttribute("aria-current", "true"); }
+      else { d.removeAttribute("aria-current"); }
+    });
+  }
+
+  function naar(i, hand) {
+    if (!posities.length) { return; }
+    var n = posities.length;
+    i = ((i % n) + n) % n;
+    if (hand) { staat.laatsteHand = Date.now(); }
+    spoor.scrollTo({ left: posities[i], behavior: reduce ? "auto" : "smooth" });
+    markeer();
+  }
+
+  vorige.addEventListener("click", function () { naar(zoekHuidig() - 1, true); });
+  volgende.addEventListener("click", function () { naar(zoekHuidig() + 1, true); });
+
+  spoor.addEventListener("keydown", function (e) {
+    if (e.target !== spoor) { return; }
+    if (e.key === "ArrowRight") { e.preventDefault(); naar(zoekHuidig() + 1, true); }
+    else if (e.key === "ArrowLeft") { e.preventDefault(); naar(zoekHuidig() - 1, true); }
+  });
+
+  /* een opengeklapte review ("Lees meer") houdt de rotatie stil */
+  spoor.addEventListener("click", function (e) {
+    if (e.target.closest && e.target.closest(".review__meer")) { herplan(); }
+  });
+
+  spoor.addEventListener("scroll", function () {
+    if (wacht) { return; }
+    wacht = window.requestAnimationFrame(function () { wacht = null; markeer(); });
+  }, { passive: true });
+
+  /* handbediening (aanraken, scrollwiel, toets) houdt de rotatie even stil */
+  ["pointerdown", "touchstart", "wheel", "keydown"].forEach(function (ev) {
+    wrap.addEventListener(ev, function () { staat.laatsteHand = Date.now(); }, { passive: true });
+  });
+
+  /* De timer loopt alleen als niets de rotatie tegenhoudt. */
+  function magDraaien() {
+    return !reduce && !staat.pauze && !staat.hover && !staat.focus && staat.zichtbaar && staat.tab
+      && !spoor.querySelector(".review.is-open");
+  }
+  function herplan() {
+    if (timer) { window.clearInterval(timer); timer = null; }
+    spoor.setAttribute("aria-live", magDraaien() ? "off" : "polite");
+    if (!magDraaien()) { return; }
+    timer = window.setInterval(function () {
+      if (!magDraaien()) { return; }
+      if (Date.now() - staat.laatsteHand < INTERVAL) { return; }
+      naar(zoekHuidig() + 1, false);
+    }, INTERVAL);
+  }
+
+  wrap.addEventListener("pointerenter", function (e) {
+    if (e.pointerType === "mouse") { staat.hover = true; herplan(); }
+  });
+  wrap.addEventListener("pointerleave", function (e) {
+    if (e.pointerType === "mouse") { staat.hover = false; herplan(); }
+  });
+  wrap.addEventListener("focusin", function (e) {
+    var toets = true;
+    try { toets = e.target.matches(":focus-visible"); } catch (err) { toets = true; }
+    if (toets) { staat.focus = true; herplan(); }
+  });
+  wrap.addEventListener("focusout", function (e) {
+    if (e.relatedTarget && wrap.contains(e.relatedTarget)) { return; }
+    staat.focus = false;
+    herplan();
+  });
+  document.addEventListener("visibilitychange", function () {
+    staat.tab = !document.hidden;
+    herplan();
+  });
+  if ("IntersectionObserver" in window) {
+    new IntersectionObserver(function (items) {
+      staat.zichtbaar = items[items.length - 1].isIntersecting;
+      herplan();
+    }, { threshold: 0.2 }).observe(wrap);
+  }
+
+  pauzeknop.addEventListener("click", function () {
+    staat.pauze = !staat.pauze;
+    pauzeknop.setAttribute("aria-label", staat.pauze ? "Speel automatisch wisselen af" : "Pauzeer automatisch wisselen");
+    pauzeknop.textContent = staat.pauze ? "Speel af" : "Pauzeer";
+    herplan();
+  });
+
+  function opnieuw() { meetPosities(); bouwDots(); markeer(); }
+  opnieuw();
+  herplan();
+  if (document.fonts && document.fonts.ready) { document.fonts.ready.then(opnieuw); }
+  var breed = window.innerWidth;
+  window.addEventListener("resize", function () {
+    if (window.innerWidth === breed) { return; }
+    breed = window.innerWidth;
+    opnieuw();
   });
 })();

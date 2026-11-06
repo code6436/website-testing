@@ -459,7 +459,6 @@ section[id]{scroll-margin-top:82px}
 
 /* ---------- reviews ---------- */
 .reviews{padding:clamp(60px,10vh,140px) 0;border-top:1px solid var(--line)}
-.review-grid{align-items:stretch}
 .review{background:var(--bg-2);border:1px solid var(--line-2);border-radius:var(--r);
   padding:clamp(22px,2.2vw,30px);display:flex;flex-direction:column;gap:14px;margin:0;
 }
@@ -477,7 +476,7 @@ section[id]{scroll-margin-top:82px}
    groeien. Dat ingeklapte kaarten in een rij even hoog blijven, regelt
    main.js met .review--rij (tekst minstens 4 regels) en .review--plek-knop
    (ruimte van de knop vrijhouden bij een korte review zonder knop). */
-.review-grid.js-inkort{align-items:start}
+.review-track.js-inkort{align-items:start}
 .js-inkort .review__tekst{display:-webkit-box;-webkit-box-orient:vertical;
   -webkit-line-clamp:4;line-clamp:4;overflow:hidden}
 .js-inkort .review.is-open .review__tekst{display:block;-webkit-line-clamp:none;line-clamp:none;overflow:visible}
@@ -487,6 +486,35 @@ section[id]{scroll-margin-top:82px}
   padding:0;background:none;border:0;font:inherit;font-size:.92rem;font-weight:600;color:var(--accent);
   text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:1px;cursor:pointer}
 .review__meer:hover{text-decoration-thickness:2px}
+
+/* ---------- reviewcarrousel (main.js zet .js-carousel) ----------
+   Een rij kaarten in een scroll-snap-spoor: zonder JavaScript gewoon een
+   horizontaal scrollbare rij (alles bereikbaar, swipen werkt). Met
+   JavaScript komen knoppen, bolletjes en automatisch doorschuiven
+   (alleen zonder reduced motion) erbij. */
+.carousel{max-width:var(--max);margin:0 auto}
+.review-track{--kgap:clamp(14px,1.6vw,22px);position:relative;box-sizing:border-box;display:flex;gap:var(--kgap);
+  overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;
+  margin:0 var(--gut);scrollbar-color:var(--roze) var(--sand)}
+.review-track .review{flex:0 0 calc((100% - 2 * var(--kgap)) / 3);box-sizing:border-box;scroll-snap-align:start}
+@media (max-width:900px){.review-track .review{flex-basis:calc((100% - var(--kgap)) / 2)}}
+/* Telefoon: spoor over de volle breedte, volgende kaart steekt een stukje uit */
+@media (max-width:560px){.review-track{margin:0;padding:0 var(--gut);scroll-padding:0 var(--gut)}
+  .review-track .review{flex-basis:88%}}
+.review-track:focus-visible,.carousel__knop:focus-visible,.carousel__dot:focus-visible{outline:2px solid var(--roze);outline-offset:2px}
+.js-carousel .review-track{scrollbar-width:none}
+.js-carousel .review-track::-webkit-scrollbar{display:none}
+.carousel__bar{display:none}
+.js-carousel .carousel__bar{display:flex;align-items:center;flex-wrap:wrap;gap:10px;padding:0 var(--gut);margin-top:clamp(18px,2.4vw,28px)}
+.carousel__knop{display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;padding:0;
+  background:transparent;color:var(--ink);border:1px solid var(--line-2);border-radius:6px;font:inherit;font-size:1.2rem;cursor:pointer}
+.carousel__knop:hover{border-color:var(--roze);color:var(--roze)}
+.carousel__dots{display:flex;flex-wrap:wrap;align-items:center;margin-left:6px}
+.carousel__dot{position:relative;width:28px;height:44px;padding:0;background:none;border:0;cursor:pointer}
+.carousel__dot::before{content:"";position:absolute;left:50%;top:50%;width:8px;height:8px;margin:-4px 0 0 -4px;border-radius:2px;background:var(--line-2)}
+.carousel__dot[aria-current="true"]::before{background:var(--roze)}
+.carousel__pauze{width:auto;margin-left:auto;padding:0 16px;font-size:.92rem;font-weight:600}
+@media (prefers-reduced-motion:reduce){.carousel__pauze{display:none}}
 
 /* ---------- sterrenwidget (reviewformulier) ---------- */
 .sterren{display:flex;flex-direction:row-reverse;justify-content:flex-end;gap:4px}
