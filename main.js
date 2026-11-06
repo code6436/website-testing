@@ -756,7 +756,7 @@ var INFO_MAIL = "info@voxmediahouse.nl";
 })();
 
 /* Reviewcarrousel: het spoor is een scroll-snap-rij (werkt zonder JS). Hier
-   komen knoppen, bolletjes en pauzeknop bij, en elke 6,5 s schuift de rij
+   komen knoppen en bolletjes bij, en elke 6,5 s schuift de rij
    een kaart verder (aan het eind terug naar begin). Pauze bij hover, focus
    binnen de rij, sectie buiten beeld, verborgen tabblad en recente
    handbediening; helemaal geen automatisch doorschuiven bij reduced motion. */
@@ -771,7 +771,7 @@ var INFO_MAIL = "info@voxmediahouse.nl";
   var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   var INTERVAL = 6500;
   var posities = [], timer = null, wacht = null;
-  var staat = { hover: false, focus: false, zichtbaar: true, tab: true, pauze: false, laatsteHand: 0 };
+  var staat = { hover: false, focus: false, zichtbaar: true, tab: true, laatsteHand: 0 };
 
   wrap.classList.add("js-carousel");
 
@@ -789,11 +789,9 @@ var INFO_MAIL = "info@voxmediahouse.nl";
   var volgende = maakKnop("carousel__knop", "Volgende review", "→");
   var dots = document.createElement("div");
   dots.className = "carousel__dots";
-  var pauzeknop = maakKnop("carousel__knop carousel__pauze", "Pauzeer automatisch wisselen", "Pauzeer");
   bar.appendChild(vorige);
   bar.appendChild(volgende);
   bar.appendChild(dots);
-  if (!reduce) { bar.appendChild(pauzeknop); }
   wrap.appendChild(bar);
 
   function meetPosities() {
@@ -868,7 +866,7 @@ var INFO_MAIL = "info@voxmediahouse.nl";
 
   /* De timer loopt alleen als niets de rotatie tegenhoudt. */
   function magDraaien() {
-    return !reduce && !staat.pauze && !staat.hover && !staat.focus && staat.zichtbaar && staat.tab
+    return !reduce && !staat.hover && !staat.focus && staat.zichtbaar && staat.tab
       && !spoor.querySelector(".review.is-open");
   }
   function herplan() {
@@ -908,13 +906,6 @@ var INFO_MAIL = "info@voxmediahouse.nl";
       herplan();
     }, { threshold: 0.2 }).observe(wrap);
   }
-
-  pauzeknop.addEventListener("click", function () {
-    staat.pauze = !staat.pauze;
-    pauzeknop.setAttribute("aria-label", staat.pauze ? "Speel automatisch wisselen af" : "Pauzeer automatisch wisselen");
-    pauzeknop.textContent = staat.pauze ? "Speel af" : "Pauzeer";
-    herplan();
-  });
 
   function opnieuw() { meetPosities(); bouwDots(); markeer(); }
   opnieuw();

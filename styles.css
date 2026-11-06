@@ -513,8 +513,6 @@ section[id]{scroll-margin-top:82px}
 .carousel__dot{position:relative;width:28px;height:44px;padding:0;background:none;border:0;cursor:pointer}
 .carousel__dot::before{content:"";position:absolute;left:50%;top:50%;width:8px;height:8px;margin:-4px 0 0 -4px;border-radius:2px;background:var(--line-2)}
 .carousel__dot[aria-current="true"]::before{background:var(--roze)}
-.carousel__pauze{width:auto;margin-left:auto;padding:0 16px;font-size:.92rem;font-weight:600}
-@media (prefers-reduced-motion:reduce){.carousel__pauze{display:none}}
 
 /* ---------- sterrenwidget (reviewformulier) ---------- */
 .sterren{display:flex;flex-direction:row-reverse;justify-content:flex-end;gap:4px}
